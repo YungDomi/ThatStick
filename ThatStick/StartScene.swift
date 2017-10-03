@@ -12,6 +12,43 @@ import SpriteKit
 import GameplayKit
 
 class StartScene: SKScene {
+    var tapplay = SKLabelNode()
+    var timer = Timer()
+    var kleiner = Bool()
+   
+    
+    override func didMove(to view: SKView) {
+        tapplay = self.childNode(withName: "tapplay") as! SKLabelNode
+   tapplay.fontSize = 70
+      scheduledTimerWithTimeInterval()
+        
+        
+        
+    }
+    func scheduledTimerWithTimeInterval(){
+        // Scheduling timer to Call the function "updateCounting" with the interval of 1 seconds
+        timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateCounting), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateCounting(){
+        
+        if tapplay.fontSize <= 65 {
+            kleiner = true
+            
+        }
+        if tapplay.fontSize >= 75 {
+            kleiner = false
+        }
+        
+        
+        if (kleiner){
+            tapplay.fontSize = tapplay.fontSize + 1
+        }else{
+            tapplay.fontSize = tapplay.fontSize - 1
+            
+        }
+        
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
   
@@ -22,4 +59,8 @@ class StartScene: SKScene {
             }
         }
     }
-}
+    
+  
+ 
+    }
+

@@ -151,32 +151,47 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     
     func check(){
+       
+       let randomNum = Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200))
+        
+    
+        
+        
         if w1r.position.y <= -650 {
             w1r.position.y = 640
             w1l.position.y = 640
             scorebool = true
             firstgamec = false
-            
-            
+            w1r.position.x = CGFloat(randomNum)
+            w1l.position.x = w1r.position.x - space1
             
         }
         if w2r.position.y <= -650 {
             w2r.position.y = 640
             w2l.position.y = 640
             scorebool = true
+            w2r.position.x = CGFloat(randomNum)
+            w2l.position.x = w2r.position.x - space2
+            
         }
         if w3r.position.y <= -650 {
             w3r.position.y = 640
             w3l.position.y = 640
             scorebool = true
+            w3r.position.x = CGFloat(randomNum)
+            w3l.position.x = w3r.position.x - space3
+            
         }
         if w4r.position.y <= -650 {
             w4r.position.y = 640
             w4l.position.y = 640
             scorebool = true
+            w4r.position.x = CGFloat(randomNum)
+            w4l.position.x = w4r.position.x - space4
+            
         }
         
-        if w1r.position.y <= -430 || w2r.position.y <= -430 || w3r.position.y <= -430 || w4r.position.y <= -430 {
+        if w1r.position.y <= -355 || w2r.position.y <= -355 || w3r.position.y <= -355 || w4r.position.y <= -355 {
             if scorebool {
                 score += 1
                 scorelabels.text = String(score)
