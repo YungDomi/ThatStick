@@ -157,6 +157,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             scorebool = true
             firstgamec = false
             
+            
+            
         }
         if w2r.position.y <= -650 {
             w2r.position.y = 640
@@ -253,7 +255,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
          if gamepause {
        
         }else{
-
         if firstgamec{
            firstgame()
         }else{
