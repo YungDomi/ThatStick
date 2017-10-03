@@ -151,12 +151,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     func check(){
        
-       let randomNum = Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200))
+       
         
     
         
         
         if w1r.position.y <= -650 {
+            let randomNum = Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200))
             w1r.position.y = 640
             w1l.position.y = 640
             scorebool = true
@@ -166,6 +167,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             
         }
         if w2r.position.y <= -650 {
+            let randomNum = Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200))
             w2r.position.y = 640
             w2l.position.y = 640
             scorebool = true
@@ -174,6 +176,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             
         }
         if w3r.position.y <= -650 {
+            let randomNum = Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200))
             w3r.position.y = 640
             w3l.position.y = 640
             scorebool = true
@@ -182,6 +185,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             
         }
         if w4r.position.y <= -650 {
+            let randomNum = Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200))
             w4r.position.y = 640
             w4l.position.y = 640
             scorebool = true
