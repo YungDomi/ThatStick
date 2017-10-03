@@ -17,6 +17,8 @@
 		6D9A2FB11F74176000113B64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D9A2FAF1F74176000113B64 /* LaunchScreen.storyboard */; };
 		6D9A2FBC1F74176000113B64 /* ThatStickTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A2FBB1F74176000113B64 /* ThatStickTests.swift */; };
 		6D9A2FC71F74176000113B64 /* ThatStickUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A2FC61F74176000113B64 /* ThatStickUITests.swift */; };
+		FEF2F4651F83A81500395F74 /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FEF2F4641F83A81500395F74 /* StartScene.sks */; };
+		FEF2F4671F83A82C00395F74 /* StartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF2F4661F83A82C00395F74 /* StartScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		6D9A2FC21F74176000113B64 /* ThatStickUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThatStickUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D9A2FC61F74176000113B64 /* ThatStickUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThatStickUITests.swift; sourceTree = "<group>"; };
 		6D9A2FC81F74176000113B64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FEF2F4641F83A81500395F74 /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
+		FEF2F4661F83A82C00395F74 /* StartScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,8 @@
 				6D9A2FA21F74176000113B64 /* GameScene.sks */,
 				6D9A2FA41F74176000113B64 /* Actions.sks */,
 				6D9A2FA61F74176000113B64 /* GameScene.swift */,
+				FEF2F4641F83A81500395F74 /* StartScene.sks */,
+				FEF2F4661F83A82C00395F74 /* StartScene.swift */,
 				6D9A2FA81F74176000113B64 /* GameViewController.swift */,
 				6D9A2FAA1F74176000113B64 /* Main.storyboard */,
 				6D9A2FAD1F74176000113B64 /* Assets.xcassets */,
@@ -244,6 +250,7 @@
 				6D9A2FAC1F74176000113B64 /* Main.storyboard in Resources */,
 				6D9A2FA31F74176000113B64 /* GameScene.sks in Resources */,
 				6D9A2FAE1F74176000113B64 /* Assets.xcassets in Resources */,
+				FEF2F4651F83A81500395F74 /* StartScene.sks in Resources */,
 				6D9A2FB11F74176000113B64 /* LaunchScreen.storyboard in Resources */,
 				6D9A2FA51F74176000113B64 /* Actions.sks in Resources */,
 			);
@@ -273,6 +280,7 @@
 				6D9A2FA71F74176000113B64 /* GameScene.swift in Sources */,
 				6D9A2FA91F74176000113B64 /* GameViewController.swift in Sources */,
 				6D9A2FA11F74176000113B64 /* AppDelegate.swift in Sources */,
+				FEF2F4671F83A82C00395F74 /* StartScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
