@@ -34,6 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var space3 = CGFloat()
     var space4 = CGFloat()
     var firstgamec = Bool()
+    
 
     override func didMove(to view: SKView) {
         
@@ -51,7 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         scorelabel = self.childNode(withName: "scorelabel") as! SKLabelNode
         stick = self.childNode(withName: "stick") as! SKSpriteNode
         
-       setup()
+        setup()
         
     }
     func setup(){
@@ -86,6 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         w4l.position.y = 640
         w4r.position.y = 640
         
+        
         w4l.position.x = -400
         w4r.position.x = w4l.position.x + space4
         w3l.position.x = -255
@@ -119,10 +121,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }
         check()
     }
-    
-   
-    
- 
+
     override func touchesMoved( _ touches: Set<UITouch>, with event: UIEvent?){
         if gamepause {
             
