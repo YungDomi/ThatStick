@@ -33,12 +33,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var space2 = CGFloat()
     var space3 = CGFloat()
     var space4 = CGFloat()
-    var firststart = Bool()
-    
-    
+    var firstgamec = Bool()
+
     override func didMove(to view: SKView) {
         
-       physicsWorld.contactDelegate = self
+        physicsWorld.contactDelegate = self
         w1r = self.childNode(withName: "w1r") as! SKSpriteNode
         w1l = self.childNode(withName: "w1l") as! SKSpriteNode
         w2r = self.childNode(withName: "w2r") as! SKSpriteNode
@@ -51,21 +50,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         scorelabels = self.childNode(withName: "scorelabels") as! SKLabelNode
         scorelabel = self.childNode(withName: "scorelabel") as! SKLabelNode
         stick = self.childNode(withName: "stick") as! SKSpriteNode
-       
-       
-        startgame()
-        scorebool = true
-        gamepause = false
         
-   
-        
-        
-        
+       setup()
         
     }
-    
-    func startgame(){
-        firststart = true;
+    func setup(){
         space1 = 895
         space2 = 895
         space3 = 895
@@ -74,28 +63,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         links2 = true
         links3 = true
         links4 = true
-        
         score = 0
-        scorelabels.text = String(0)
-        w1l.position.y = -320
-        w1r.position.y = -320
-        w2l.position.y = 0
-        w2r.position.y = 0
-        w3l.position.y = 320
-        w3r.position.y = 320
-        w4l.position.y = 640
-        w4r.position.y = 640
-        
-        w4l.position.x = -400
-        w4r.position.x = w4l.position.x + space4
-        w3l.position.x = -255
-        w3r.position.x = w3l.position.x + space3
-        w2l.position.x = -695
-        w2r.position.x = w2l.position.x + space2
-        w1l.position.x = -450
-        w1r.position.x = w1l.position.x + space1
-        
-        
+        firstgamec = true
         w1l.zPosition = -1
         w1r.zPosition = -1
         w2l.zPosition = -1
@@ -107,10 +76,51 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         header.zPosition = 0
         scorelabel.zPosition = 0
         scorelabels.zPosition = 0
+        scorelabels.text = String(0)
+        w1l.position.y = 640
+        w1r.position.y = 640
+        w2l.position.y = 640
+        w2r.position.y = 640
+        w3l.position.y = 640
+        w3r.position.y = 640
+        w4l.position.y = 640
+        w4r.position.y = 640
         
-        
-        
-     }
+        w4l.position.x = -400
+        w4r.position.x = w4l.position.x + space4
+        w3l.position.x = -255
+        w3r.position.x = w3l.position.x + space3
+        w2l.position.x = -695
+        w2r.position.x = w2l.position.x + space2
+        w1l.position.x = -450
+        w1r.position.x = w1l.position.x + space1
+        scorebool = true
+        gamepause = false
+    }
+    func firstgame(){
+        if (w4r.position.y >= -640){
+            w4r.position.y = w4r.position.y - 5
+            w4l.position.y = w4l.position.y - 5
+            if w4r.position.y <= 320{
+                w3r.position.y = w3r.position.y - 5
+                w3l.position.y = w3l.position.y - 5
+            }
+            if w3r.position.y <= 320{
+                w2r.position.y = w2r.position.y - 5
+                w2l.position.y = w2l.position.y - 5
+            }
+            if w2r.position.y <= 320{
+                w1r.position.y = w1r.position.y - 5
+                w1l.position.y = w1l.position.y - 5
+            }
+
+        }else{
+            firstgamec = false
+        }
+        check()
+    }
+    
+   
     
  
     override func touchesMoved( _ touches: Set<UITouch>, with event: UIEvent?){
@@ -145,6 +155,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             w1r.position.y = 640
             w1l.position.y = 640
             scorebool = true
+            firstgamec = false
             
         }
         if w2r.position.y <= -650 {
@@ -239,42 +250,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        
-        if gamepause {
-            
-            
+         if gamepause {
+       
         }else{
-        if firststart {
-                w1l.position.y = -320
-                w1r.position.y = -320
-                w2l.position.y = -320
-                w2r.position.y = -320
-                w3l.position.y = -320
-                w3r.position.y = -320
-                w4l.position.y = -320
-                w4r.position.y = -320
-                
-                while w1l.position.y >= -650 {
-                    
-                    w1r.position.y = w1r.position.y - 5
-                    w2r.position.y = w2r.position.y - 5
-                    w3r.position.y = w3r.position.y - 5
-                    w4r.position.y = w4r.position.y - 5
-                    w1l.position.y = w1l.position.y - 5
-                    w2l.position.y = w2l.position.y - 5
-                    w3l.position.y = w3l.position.y - 5
-                    w4l.position.y = w4l.position.y - 5
-                    check()
-                }
-                firststart = false;
-            }else{
+
+        if firstgamec{
+           firstgame()
+        }else{
                 walls()
                 move()
                 check()
             }
         }
+    }
         
         
         
     }
-}
+
