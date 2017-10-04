@@ -97,9 +97,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         space2 = 895
         space3 = 895
         space4 = 895
-        links1 = true
+        links1 = false
         links2 = true
-        links3 = true
+        links3 = false
         links4 = true
         GameScene.score = 0
         firstgamec = true
