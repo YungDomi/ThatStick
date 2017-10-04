@@ -81,7 +81,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         randmax = 696
         randmin = 200
         figdelay = 0
+<<<<<<< HEAD
         walldownspeed = 5
+=======
+        walldownspeed = 10
+>>>>>>> e93fad2c791c058cf912d95ed80d4b2eefc29232
         wallsidespeed = 1
         bottomremoving = -650
         topplacing = 640
@@ -206,6 +210,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     
     func check(){
+<<<<<<< HEAD
+=======
+        
+>>>>>>> e93fad2c791c058cf912d95ed80d4b2eefc29232
         if w1r.position.y <= bottomremoving {
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
             w1r.position.y = topplacing
