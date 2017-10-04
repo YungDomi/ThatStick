@@ -35,6 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var space4 = CGFloat()
     var firstgamec = Bool()
     var randomNum1 = integer_t()
+    var randomNum = integer_t()
     
 
     override func didMove(to view: SKView) {
@@ -88,24 +89,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         w4l.position.y = 640
         w4r.position.y = 640
         
-        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200)))
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(690) - UInt32(205)) + UInt32(205)))
         w4r.position.x = CGFloat(randomNum1)
         w4l.position.x = w4r.position.x - space4
-        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200)))
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(690) - UInt32(205)) + UInt32(205)))
         w3r.position.x = CGFloat(randomNum1)
         w3l.position.x = w3r.position.x - space3
-        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200)))
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(690) - UInt32(205)) + UInt32(205)))
         w2r.position.x = CGFloat(randomNum1)
         w2l.position.x = w2r.position.x - space2
-        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200)))
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(690) - UInt32(205)) + UInt32(205)))
         w1r.position.x = CGFloat(randomNum1)
         w1l.position.x = w1r.position.x - space1
         scorebool = true
         gamepause = false
     }
     func firstgame(){
-        walls()
-        if (w4r.position.y >= -640){
+        
+        if (w4r.position.y >= -620){
             w4r.position.y = w4r.position.y - 5
             w4l.position.y = w4l.position.y - 5
             if w4r.position.y <= 320{
@@ -125,6 +126,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             firstgamec = false
         }
         check()
+        walls()
     }
 
     override func touchesMoved( _ touches: Set<UITouch>, with event: UIEvent?){
@@ -155,14 +157,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     
     func check(){
-       
-       
-        
-    
-        
-        
+
         if w1r.position.y <= -650 {
-            let randomNum = Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200))
+            randomNum = integer_t(Int(arc4random_uniform(UInt32(670) - UInt32(225)) + UInt32(225)))
             w1r.position.y = 640
             w1l.position.y = 640
             scorebool = true
@@ -172,7 +169,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             
         }
         if w2r.position.y <= -650 {
-            let randomNum = Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200))
+            randomNum = integer_t(Int(arc4random_uniform(UInt32(670) - UInt32(225)) + UInt32(225)))
             w2r.position.y = 640
             w2l.position.y = 640
             scorebool = true
@@ -181,7 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             
         }
         if w3r.position.y <= -650 {
-            let randomNum = Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200))
+            randomNum = integer_t(Int(arc4random_uniform(UInt32(670) - UInt32(225)) + UInt32(225)))
             w3r.position.y = 640
             w3l.position.y = 640
             scorebool = true
@@ -190,7 +187,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             
         }
         if w4r.position.y <= -650 {
-            let randomNum = Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200))
+            randomNum = integer_t(Int(arc4random_uniform(UInt32(670) - UInt32(225)) + UInt32(225)))
             w4r.position.y = 640
             w4l.position.y = 640
             scorebool = true
@@ -282,8 +279,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
            firstgame()
         }else{
                 walls()
-                move()
                 check()
+            
+                move()
+            
             }
         }
     }
