@@ -91,7 +91,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         topplacing = 640
         figurypos = -355
         //nicht unter 320!!
-        wallspace = 500
+        wallspace = 320
         
         space1 = 895
         space2 = 895
@@ -141,7 +141,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     }
     
     func firstgame(){
-        if (w1r.position.y >= bottomremoving){
+        if (w4r.position.y >= bottomremoving){
             w1r.position.y = w1r.position.y - walldownspeed
             w1l.position.y = w1l.position.y - walldownspeed
             if w1r.position.y <= topplacing-wallspace{
@@ -156,18 +156,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                 w4r.position.y = w4r.position.y - walldownspeed
                 w4l.position.y = w4l.position.y - walldownspeed
             }
-            /*
-             if w4r.position.y <= topplacing-wallspace{
-             w1r.position.y = w1r.position.y - walldownspeed
-             w1l.position.y = w1l.position.y - walldownspeed
-             }
-            */
-        }else{
-            if w4r.position.y <= topplacing - wallspace{
-                firstgamec = false
-
-            }
         }
+        
         check()
         walls()
     }
@@ -353,11 +343,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             }
         }
     }
-    /*
-    public class ScoreClass{
-        var scoreString = String()
-        
-        scoreString = String(score)
-    }*/
+   
 }
 
