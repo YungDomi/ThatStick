@@ -45,10 +45,10 @@ class GameOverScene: SKScene {
     
     @objc func updateCounting(){
         
-        if tapplay.fontSize <= 45 {
+        if tapplay.fontSize <= 50 {
             kleiner = true
         }
-        if tapplay.fontSize >= 65 {
+        if tapplay.fontSize >= 60 {
             kleiner = false
         }
         if (kleiner){
