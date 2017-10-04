@@ -37,7 +37,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var randomNum1 = integer_t()
     var randomNum = integer_t()
     
-
+    
     override func didMove(to view: SKView) {
         
         physicsWorld.contactDelegate = self
@@ -89,16 +89,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         w4l.position.y = 640
         w4r.position.y = 640
         
-        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(690) - UInt32(205)) + UInt32(205)))
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(696) - UInt32(200)) + UInt32(200)))
         w4r.position.x = CGFloat(randomNum1)
         w4l.position.x = w4r.position.x - space4
-        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(690) - UInt32(205)) + UInt32(205)))
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(696) - UInt32(200)) + UInt32(200)))
         w3r.position.x = CGFloat(randomNum1)
         w3l.position.x = w3r.position.x - space3
-        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(690) - UInt32(205)) + UInt32(205)))
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(696) - UInt32(200)) + UInt32(200)))
         w2r.position.x = CGFloat(randomNum1)
         w2l.position.x = w2r.position.x - space2
-        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(690) - UInt32(205)) + UInt32(205)))
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(696) - UInt32(200)) + UInt32(200)))
         w1r.position.x = CGFloat(randomNum1)
         w1l.position.x = w1r.position.x - space1
         scorebool = true
@@ -121,27 +121,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                 w1r.position.y = w1r.position.y - 5
                 w1l.position.y = w1l.position.y - 5
             }
-
+            
         }else{
             firstgamec = false
         }
         check()
         walls()
     }
-
+    
     override func touchesMoved( _ touches: Set<UITouch>, with event: UIEvent?){
         if gamepause {
             
             
         }else{
-           
-        for touch in touches{
+            
+            for touch in touches{
                 let location = touch.location(in: self)
                 stick.run(SKAction.moveTo(x: location.x, duration: 0))
             }
         }
-        }
-        
+    }
+    
     func didBegin(_ contact: SKPhysicsContact) {
         /* Physics contact delegate implementation */
         
@@ -157,9 +157,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     
     func check(){
-
+        
         if w1r.position.y <= -650 {
-            randomNum = integer_t(Int(arc4random_uniform(UInt32(670) - UInt32(225)) + UInt32(225)))
+            randomNum = integer_t(Int(arc4random_uniform(UInt32(696) - UInt32(200)) + UInt32(200)))
             w1r.position.y = 640
             w1l.position.y = 640
             scorebool = true
@@ -169,7 +169,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             
         }
         if w2r.position.y <= -650 {
-            randomNum = integer_t(Int(arc4random_uniform(UInt32(670) - UInt32(225)) + UInt32(225)))
+            randomNum = integer_t(Int(arc4random_uniform(UInt32(696) - UInt32(200)) + UInt32(200)))
             w2r.position.y = 640
             w2l.position.y = 640
             scorebool = true
@@ -178,7 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             
         }
         if w3r.position.y <= -650 {
-            randomNum = integer_t(Int(arc4random_uniform(UInt32(670) - UInt32(225)) + UInt32(225)))
+            randomNum = integer_t(Int(arc4random_uniform(UInt32(696) - UInt32(200)) + UInt32(200)))
             w3r.position.y = 640
             w3l.position.y = 640
             scorebool = true
@@ -187,7 +187,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             
         }
         if w4r.position.y <= -650 {
-            randomNum = integer_t(Int(arc4random_uniform(UInt32(670) - UInt32(225)) + UInt32(225)))
+            randomNum = integer_t(Int(arc4random_uniform(UInt32(696) - UInt32(200)) + UInt32(200)))
             w4r.position.y = 640
             w4l.position.y = 640
             scorebool = true
@@ -202,7 +202,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                 scorelabels.text = String(score)
             }
             scorebool = false
-       
+            
         }
         
         
@@ -243,28 +243,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         if links1{
             w1r.position.x = w1r.position.x + 1
             w1l.position.x = w1l.position.x + 1
-        }else if !links1{
+        }else{
             w1r.position.x = w1r.position.x - 1
             w1l.position.x = w1l.position.x - 1
         }
         if links2{
             w2r.position.x = w2r.position.x + 1
             w2l.position.x = w2l.position.x + 1
-        }else if !links2{
+        }else{
             w2r.position.x = w2r.position.x - 1
             w2l.position.x = w2l.position.x - 1
         }
         if links3{
             w3r.position.x = w3r.position.x + 1
             w3l.position.x = w3l.position.x + 1
-        }else if !links1{
+        }else{
             w3r.position.x = w3r.position.x - 1
             w3l.position.x = w3l.position.x - 1
         }
         if links4{
             w4r.position.x = w4r.position.x + 1
             w4l.position.x = w4l.position.x + 1
-        }else if !links4{
+        }else{
             w4r.position.x = w4r.position.x - 1
             w4l.position.x = w4l.position.x - 1
         }
@@ -272,22 +272,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-         if gamepause {
-       
+        if gamepause {
+            
         }else{
-        if firstgamec{
-           firstgame()
-        }else{
+            if firstgamec{
+                firstgame()
+            }else{
                 walls()
                 check()
-            
                 move()
-            
+                
             }
         }
     }
-        
-        
-        
-    }
+    
+    
+    
+}
 
