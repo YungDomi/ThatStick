@@ -12,6 +12,7 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate  {
+    static var score = integer_t()
     var gamepause = Bool()
     var pausee = Bool()
     var stick = SKSpriteNode()
@@ -25,7 +26,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var w4l = SKSpriteNode()
     var scorelabels = SKLabelNode()
     var scorelabel = SKLabelNode()
-    var score = integer_t()
+    
     var header = SKSpriteNode()
     var scorebool = Bool()
     var links1 = Bool()
@@ -81,16 +82,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         randmax = 696
         randmin = 200
         figdelay = 0
-
+        
         walldownspeed = 5
-
-
+        
+        
         wallsidespeed = 1
         bottomremoving = -650
         topplacing = 640
         figurypos = -355
         //nicht unter 320!!
-        wallspace = 320
+        wallspace = 500
         
         space1 = 895
         space2 = 895
@@ -100,7 +101,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         links2 = true
         links3 = true
         links4 = true
-        score = 0
+        GameScene.score = 0
         firstgamec = true
         w1l.zPosition = -1
         w1r.zPosition = -1
@@ -138,6 +139,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         scorebool = true
         gamepause = false
     }
+    
     func firstgame(){
         if (w4r.position.y >= (bottomremoving+30)){
             w4r.position.y = w4r.position.y - walldownspeed
@@ -155,6 +157,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                 w1l.position.y = w1l.position.y - walldownspeed
             }
             
+             if w1r.position.y <= topplacing-wallspace{
+             w4r.position.y = w4r.position.y - walldownspeed
+             w4l.position.y = w4l.position.y - walldownspeed
+             }
+            
         }else{
             firstgamec = false
         }
@@ -168,9 +175,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             pausee = !pausee
         }else{
             if gamepause {
-                
             }else{
-                
                 for touch in touches{
                     let location = touch.location(in: self)
                     stick.run(SKAction.moveTo(x: location.x, duration: TimeInterval(figdelay)))
@@ -180,19 +185,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     }
     
     @objc func doubleTapped() {
-         pausee = !pausee
+        pausee = !pausee
     }
     
     /* override func touchesEnded( _ touches: Set<UITouch>, with event: UIEvent?){
-        for touch in touches{
-            let location = touch.location(in: self)
-            if buttonpause.contains(location) {
-                pausee = !pausee
-            }
-        }
-        
-    }
- */
+     for touch in touches{
+     let location = touch.location(in: self)
+     if buttonpause.contains(location) {
+     pausee = !pausee
+     }
+     }
+     
+     }
+     */
     
     func didBegin(_ contact: SKPhysicsContact) {
         /* Physics contact delegate implementation */
@@ -209,48 +214,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     
     func check(){
-
+        
         if w1r.position.y <= bottomremoving {
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
-            w1r.position.y = topplacing
-            w1l.position.y = topplacing
+            w1r.position.y = (w4r.position.y + wallspace)
+            w1l.position.y = (w4l.position.y + wallspace)
             scorebool = true
             firstgamec = false
             w1r.position.x = CGFloat(randomNum)
             w1l.position.x = w1r.position.x - space1
-            }
+        }
         
         if w2r.position.y <= bottomremoving {
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
-            w2r.position.y = topplacing
-            w2l.position.y = topplacing
+            w2r.position.y = (w1r.position.y + wallspace)
+            w2l.position.y = (w1l.position.y + wallspace)
             scorebool = true
             w2r.position.x = CGFloat(randomNum)
             w2l.position.x = w2r.position.x - space2
-            }
+        }
         
         if w3r.position.y <= bottomremoving {
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
-            w3r.position.y = topplacing
-            w3l.position.y = topplacing
+            w3r.position.y = (w2r.position.y + wallspace)
+            w3l.position.y = (w2l.position.y + wallspace)
             scorebool = true
             w3r.position.x = CGFloat(randomNum)
             w3l.position.x = w3r.position.x - space3
-            }
+        }
         
         if w4r.position.y <= bottomremoving {
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
-            w4r.position.y = topplacing
-            w4l.position.y = topplacing
+            w4r.position.y = (w3r.position.y + wallspace)
+            w4l.position.y = (w3l.position.y + wallspace)
             scorebool = true
             w4r.position.x = CGFloat(randomNum)
             w4l.position.x = w4r.position.x - space4
-            }
+        }
         
         if w1r.position.y <= figurypos || w2r.position.y <= figurypos || w3r.position.y <= figurypos || w4r.position.y <= figurypos {
             if scorebool {
-                score += 1
-                scorelabels.text = String(score)
+                GameScene.score += 1
+                scorelabels.text = String(GameScene.score)
             }
             scorebool = false
         }
@@ -328,7 +333,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             
             
             if gamepause {
-                
+                if let scene = GameOverScene(fileNamed: "GameOverScene") {
+                    scene.scaleMode = .aspectFill
+                    view?.presentScene(scene)
+                }
             }else{
                 if firstgamec{
                     firstgame()
@@ -341,5 +349,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             }
         }
     }
+    /*
+    public class ScoreClass{
+        var scoreString = String()
+        
+        scoreString = String(score)
+    }*/
 }
 

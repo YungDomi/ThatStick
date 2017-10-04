@@ -19,8 +19,8 @@ class StartScene: SKScene {
     
     override func didMove(to view: SKView) {
         tapplay = self.childNode(withName: "tapplay") as! SKLabelNode
-   tapplay.fontSize = 70
-      scheduledTimerWithTimeInterval()
+        tapplay.fontSize = 70
+        scheduledTimerWithTimeInterval()
         
         
         
@@ -34,20 +34,15 @@ class StartScene: SKScene {
         
         if tapplay.fontSize <= 65 {
             kleiner = true
-            
         }
         if tapplay.fontSize >= 75 {
             kleiner = false
         }
-        
-        
         if (kleiner){
             tapplay.fontSize = tapplay.fontSize + 1
         }else{
             tapplay.fontSize = tapplay.fontSize - 1
-            
         }
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
