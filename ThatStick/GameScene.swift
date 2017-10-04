@@ -34,6 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var space3 = CGFloat()
     var space4 = CGFloat()
     var firstgamec = Bool()
+    var randomNum1 = integer_t()
     
 
     override func didMove(to view: SKView) {
@@ -87,19 +88,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         w4l.position.y = 640
         w4r.position.y = 640
         
-        
-        w4l.position.x = -400
-        w4r.position.x = w4l.position.x + space4
-        w3l.position.x = -255
-        w3r.position.x = w3l.position.x + space3
-        w2l.position.x = -695
-        w2r.position.x = w2l.position.x + space2
-        w1l.position.x = -450
-        w1r.position.x = w1l.position.x + space1
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200)))
+        w4r.position.x = CGFloat(randomNum1)
+        w4l.position.x = w4r.position.x - space4
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200)))
+        w3r.position.x = CGFloat(randomNum1)
+        w3l.position.x = w3r.position.x - space3
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200)))
+        w2r.position.x = CGFloat(randomNum1)
+        w2l.position.x = w2r.position.x - space2
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(695) - UInt32(200)) + UInt32(200)))
+        w1r.position.x = CGFloat(randomNum1)
+        w1l.position.x = w1r.position.x - space1
         scorebool = true
         gamepause = false
     }
     func firstgame(){
+        walls()
         if (w4r.position.y >= -640){
             w4r.position.y = w4r.position.y - 5
             w4l.position.y = w4l.position.y - 5
