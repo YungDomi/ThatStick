@@ -3,6 +3,7 @@
 //  ThatStick
 //
 //  Created by Dominic Ammann on 21.09.17.
+//  Edited by Leon Helg
 //  Copyright © 2017 YungDomi. All rights reserved.
 //
 
@@ -59,7 +60,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         tap.numberOfTapsRequired = 2
         view.addGestureRecognizer(tap)
         
-        
         physicsWorld.contactDelegate = self
         w1r = self.childNode(withName: "w1r") as! SKSpriteNode
         w1l = self.childNode(withName: "w1l") as! SKSpriteNode
@@ -75,24 +75,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         stick = self.childNode(withName: "stick") as! SKSpriteNode
         
         setup()
-        
     }
+    
     func setup(){
-        
+        //veränderbare Werte
         randmax = 696
         randmin = 200
         figdelay = 0
-        
         walldownspeed = 5
-        
-        
         wallsidespeed = 1
         bottomremoving = -650
         topplacing = 640
         figurypos = -355
+        
         //nicht unter 320!!
         wallspace = 320
         
+        
+        //nicht verändern
         space1 = 895
         space2 = 895
         space3 = 895
@@ -124,6 +124,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         w4l.position.y = topplacing
         w4r.position.y = topplacing
         
+        
         randomNum1 = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
         w4r.position.x = CGFloat(randomNum1)
         w4l.position.x = w4r.position.x - space4
@@ -140,6 +141,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         gamepause = false
     }
     
+    //Erstes Spiel: Dafür da, dass Balken von oben kommen und man nicht direkt ausweichen muss.
     func firstgame(){
         if (w4r.position.y >= bottomremoving){
             w1r.position.y = w1r.position.y - walldownspeed
@@ -180,17 +182,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     @objc func doubleTapped() {
         pausee = !pausee
     }
-    
-    /* override func touchesEnded( _ touches: Set<UITouch>, with event: UIEvent?){
-     for touch in touches{
-     let location = touch.location(in: self)
-     if buttonpause.contains(location) {
-     pausee = !pausee
-     }
-     }
-     
-     }
-     */
     
     func didBegin(_ contact: SKPhysicsContact) {
         /* Physics contact delegate implementation */
@@ -321,10 +312,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         if pausee{
-            
         }else {
-            
-            
             if gamepause {
                 if let scene = GameOverScene(fileNamed: "GameOverScene") {
                     scene.scaleMode = .aspectFill
@@ -334,15 +322,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                 if firstgamec{
                     firstgame()
                 }else{
-                    
                     walls()
                     check()
                     move()
-                    
                 }
             }
         }
     }
-   
 }
 
