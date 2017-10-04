@@ -141,29 +141,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     }
     
     func firstgame(){
-        if (w4r.position.y >= (bottomremoving+30)){
-            w4r.position.y = w4r.position.y - walldownspeed
-            w4l.position.y = w4l.position.y - walldownspeed
-            if w4r.position.y <= topplacing-wallspace{
-                w3r.position.y = w3r.position.y - walldownspeed
-                w3l.position.y = w3l.position.y - walldownspeed
-            }
-            if w3r.position.y <= topplacing-wallspace{
+        if (w1r.position.y >= bottomremoving){
+            w1r.position.y = w1r.position.y - walldownspeed
+            w1l.position.y = w1l.position.y - walldownspeed
+            if w1r.position.y <= topplacing-wallspace{
                 w2r.position.y = w2r.position.y - walldownspeed
                 w2l.position.y = w2l.position.y - walldownspeed
             }
             if w2r.position.y <= topplacing-wallspace{
-                w1r.position.y = w1r.position.y - walldownspeed
-                w1l.position.y = w1l.position.y - walldownspeed
+                w3r.position.y = w3r.position.y - walldownspeed
+                w3l.position.y = w3l.position.y - walldownspeed
             }
-            
-             if w1r.position.y <= topplacing-wallspace{
-             w4r.position.y = w4r.position.y - walldownspeed
-             w4l.position.y = w4l.position.y - walldownspeed
+            if w3r.position.y <= topplacing-wallspace{
+                w4r.position.y = w4r.position.y - walldownspeed
+                w4l.position.y = w4l.position.y - walldownspeed
+            }
+            /*
+             if w4r.position.y <= topplacing-wallspace{
+             w1r.position.y = w1r.position.y - walldownspeed
+             w1l.position.y = w1l.position.y - walldownspeed
              }
-            
+            */
         }else{
-            firstgamec = false
+            if w4r.position.y <= topplacing - wallspace{
+                firstgamec = false
+
+            }
         }
         check()
         walls()
@@ -215,7 +218,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     func check(){
         
-        if w1r.position.y <= bottomremoving {
+        if w1r.position.y <= bottomremoving && w4r.position.y <= topplacing{
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
             w1r.position.y = (w4r.position.y + wallspace)
             w1l.position.y = (w4l.position.y + wallspace)
@@ -225,7 +228,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             w1l.position.x = w1r.position.x - space1
         }
         
-        if w2r.position.y <= bottomremoving {
+        if w2r.position.y <= bottomremoving && w1r.position.y <= topplacing{
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
             w2r.position.y = (w1r.position.y + wallspace)
             w2l.position.y = (w1l.position.y + wallspace)
@@ -234,7 +237,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             w2l.position.x = w2r.position.x - space2
         }
         
-        if w3r.position.y <= bottomremoving {
+        if w3r.position.y <= bottomremoving && w2r.position.y <= topplacing{
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
             w3r.position.y = (w2r.position.y + wallspace)
             w3l.position.y = (w2l.position.y + wallspace)
@@ -243,7 +246,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             w3l.position.x = w3r.position.x - space3
         }
         
-        if w4r.position.y <= bottomremoving {
+        if w4r.position.y <= bottomremoving && w2r.position.y <= topplacing{
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
             w4r.position.y = (w3r.position.y + wallspace)
             w4l.position.y = (w3l.position.y + wallspace)
@@ -341,6 +344,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                 if firstgamec{
                     firstgame()
                 }else{
+                    
                     walls()
                     check()
                     move()
