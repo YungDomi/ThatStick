@@ -11,6 +11,7 @@ import Foundation
 import UIKit
 import SpriteKit
 import GameplayKit
+import CoreMotion
 
 class GameScene: SKScene, SKPhysicsContactDelegate  {
     static var score = integer_t()
@@ -27,6 +28,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var w4l = SKSpriteNode()
     var scorelabels = SKLabelNode()
     var scorelabel = SKLabelNode()
+    
+    // Motion manager for accelerometer
+    let motionManager = CMMotionManager()
+    
+    // Acceleration value from accelerometer
+    var xAcceleration: CGFloat = 0.0
     
     var header = SKSpriteNode()
     var scorebool = Bool()
@@ -53,12 +60,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var figdelay = integer_t()
     var randmax = integer_t()
     var randmin = integer_t()
+    var gyrosens = CGFloat()
     
     
     override func didMove(to view: SKView) {
         let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
         tap.numberOfTapsRequired = 2
         view.addGestureRecognizer(tap)
+        
+        // CoreMotion
+        // 1
+        motionManager.accelerometerUpdateInterval = 0.001
+        // 2
+        motionManager.startAccelerometerUpdates(to: OperationQueue.current!, withHandler: { (CMAccelerometerData, NSError) in
+            // 3
+            let acceleration = CMAccelerometerData?.acceleration
+            // 4
+            self.xAcceleration = (CGFloat((acceleration?.x)!) * 0.75) + (self.xAcceleration * 0.25)
+            
+            
+        } )
+       
+       
         
         physicsWorld.contactDelegate = self
         w1r = self.childNode(withName: "w1r") as! SKSpriteNode
@@ -87,9 +110,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         bottomremoving = -650
         topplacing = 640
         figurypos = -355
+        gyrosens = 1000
         
         //nicht unter 320!!
-        wallspace = 320
+        wallspace = 1000
         
         
         //nicht verändern
@@ -139,6 +163,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         w1l.position.x = w1r.position.x - space1
         scorebool = true
         gamepause = false
+    }
+    
+    override func didSimulatePhysics() {
+        // 1
+        // Set velocity based on x-axis acceleration
+        
+        
+        stick.physicsBody?.velocity = CGVector(dx: xAcceleration * gyrosens, dy: stick.physicsBody!.velocity.dy)
+       
+        
     }
     
     //Erstes Spiel: Dafür da, dass Balken von oben kommen und man nicht direkt ausweichen muss.
@@ -322,6 +356,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                 if firstgamec{
                     firstgame()
                 }else{
+                    
                     walls()
                     check()
                     move()

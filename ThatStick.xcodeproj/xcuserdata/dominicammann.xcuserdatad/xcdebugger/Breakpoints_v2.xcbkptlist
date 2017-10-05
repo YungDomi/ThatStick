@@ -2,4 +2,99 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ThatStick/GameScene.swift"
+            timestampString = "528889268.859284"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "GameScene"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ThatStick.GameScene.stick.getter : __ObjC.SKSpriteNode"
+                  moduleName = "ThatStick"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dominicammann/Desktop/Games/ThatStick/ThatStick/GameScene.swift"
+                  timestampString = "528879537.646139"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ThatStick.GameScene.stick.setter : __ObjC.SKSpriteNode"
+                  moduleName = "ThatStick"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dominicammann/Desktop/Games/ThatStick/ThatStick/GameScene.swift"
+                  timestampString = "528879537.649108"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "120">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ThatStick.GameScene.init(size: __C.CGSize) -&gt; ThatStick.GameScene"
+                  moduleName = "ThatStick"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dominicammann/Desktop/Games/ThatStick/ThatStick/GameScene.swift"
+                  timestampString = "528879537.650675"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "196">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ThatStick.GameScene.init() -&gt; ThatStick.GameScene"
+                  moduleName = "ThatStick"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dominicammann/Desktop/Games/ThatStick/ThatStick/GameScene.swift"
+                  timestampString = "528879537.65219"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "156">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ThatStick.GameScene.init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;ThatStick.GameScene&gt;"
+                  moduleName = "ThatStick"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dominicammann/Desktop/Games/ThatStick/ThatStick/GameScene.swift"
+                  timestampString = "528879537.653685"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "164">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
