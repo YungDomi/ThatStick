@@ -234,6 +234,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         walls()
     }
     
+    //Gyro Steuerung
     override func didSimulatePhysics() {
         if game_paused {
             //do nothing
@@ -252,6 +253,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }
     }
     
+    //Touch Steuerung
     override func touchesMoved( _ touches: Set<UITouch>, with event: UIEvent?){
         if game_paused {
             //Im Pausemenu kann man durch Bewegung des Sticks direkt weiterspielen.
