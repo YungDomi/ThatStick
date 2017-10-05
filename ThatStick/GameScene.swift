@@ -108,7 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         setup()
     }
     
-    //Wird beim Programmstart aufgerufen und setzt Standardwerte.
+    //Wird beim Programmstart aufgerufen und setzt Standardwerte. Hier können Werte angepasst werden.
     func setup(){
         //veränderbare Werte
         //Minimal und Maximalzahlen damit die Wände ihre "Öffnungen" nicht ausserhalb des Screens haben wenn sie Randim generiert werden.
@@ -453,13 +453,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     }
     
     /*
-     Main Funktion
+     Main Funktion. Wird bei jedem Frame aufgerufen.
      Regelt die verschiedenen "Levels" und Arten der Steuerungen
      Sehr komplizierte Methode; Übergänge zwischen den Steuerungs-Arten müssen mit sehr vielen Abfregen korrekt in die Wege geleitet werden.
      Hat für obig beschriebenen Prozess auch sehr viele Sub-Methoden.
      */
     override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
         if game_paused{
         }else {
             if game_over {
