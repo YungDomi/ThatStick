@@ -71,6 +71,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var randmax = integer_t()
     var randmin = integer_t()
     var gyrosens = CGFloat()
+    var controller = Bool()
+    var modechanges = Bool()
+    var scoresafe = integer_t()
+    var changed = Bool()
+    
     
     
     override func didMove(to view: SKView) {
@@ -115,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     func setup(){
         //veränderbare Werte
-        randmax = 796
+        randmax = 696
         randmin = 200
         figdelay = 0
         walldownspeed = 5
@@ -125,6 +130,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         figurypos = -355
         //gyrosensor sensibilität
         gyrosens = 1000
+        modechanges = false
         
         //nicht unter 320!!
         wallspace = 320
@@ -135,16 +141,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         GameScene.highscore = integer_t(gos.getHighScore())
         //nicht verändern
         scoreabstand = walldownspeed / 2
-        gyro = false
+        controller = false
+        scoresafe = -20
+        
         
         //max 1000 min 895
-        space1 = 1000
-        space2 = 1000
-        space3 = 1000
-        space4 = 1000
+        space1 = 895
+        space2 = 895
+        space3 = 895
+        space4 = 895
         
+        gyro = false
         
+         changed = false
         links1 = false
+       
         links2 = true
         links3 = false
         links4 = true
@@ -163,14 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         scorelabel.zPosition = 0
         scorelabels.zPosition = 0
         scorelabels.text = String(0)
-        w1l.position.y = topplacing
-        w1r.position.y = topplacing
-        w2l.position.y = topplacing
-        w2r.position.y = topplacing
-        w3l.position.y = topplacing
-        w3r.position.y = topplacing
-        w4l.position.y = topplacing
-        w4r.position.y = topplacing
+        settop()
         
         
         randomNum1 = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
@@ -188,16 +192,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         // scorebool = true
         gamepause = false
     }
-    
+    func settop(){
+        w1l.position.y = topplacing
+        w1r.position.y = topplacing
+        w2l.position.y = topplacing
+        w2r.position.y = topplacing
+        w3l.position.y = topplacing
+        w3r.position.y = topplacing
+        w4l.position.y = topplacing
+        w4r.position.y = topplacing
+    }
     override func didSimulatePhysics() {
         // 1
         // Set velocity based on x-axis acceleration
-        
-       
+        if pausee {
+            
+        }else{
+        }
+            if gamepause{
+                
+            }else{
+        if gyro{
             stick.physicsBody?.velocity = CGVector(dx: xAcceleration * gyrosens, dy: stick.physicsBody!.velocity.dy)
-        
-        
+        }
+        }
     }
+    
     
     //Erstes Spiel: Dafür da, dass Balken von oben kommen und man nicht direkt ausweichen muss.
     func firstgame(){
@@ -228,12 +248,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }else{
             if gamepause {
             }else{
-         
+                if (gyro == false){
                     for touch in touches{
                         let location = touch.location(in: self)
                         stick.run(SKAction.moveTo(x: location.x, duration: TimeInterval(figdelay)))
                     
                 }
+            }
             }
         }
     }
@@ -251,7 +272,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         
         /* Was there a seal involved in the collision ? */
         if contactA.categoryBitMask == 2 || contactB.categoryBitMask == 2 {
-            gamepause = true
+          gamepause = true
         }
     }
     
@@ -259,53 +280,56 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     func check(){
         if w1r.position.y <= bottomremoving && w4r.position.y <= topplacing{
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
-            w1r.position.y = (w4r.position.y + wallspace)
-            w1l.position.y = (w4l.position.y + wallspace)
-            firstgamec = false
-            w1r.position.x = CGFloat(randomNum)
-            w1l.position.x = w1r.position.x - space1
+           
+                w1r.position.y = (w4r.position.y + wallspace)
+                w1l.position.y = (w4l.position.y + wallspace)
+                firstgamec = false
+                w1r.position.x = CGFloat(randomNum)
+                w1l.position.x = w1r.position.x - space1
+            
+            
         }
         
         if w2r.position.y <= bottomremoving && w1r.position.y <= topplacing{
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
-            w2r.position.y = (w1r.position.y + wallspace)
-            w2l.position.y = (w1l.position.y + wallspace)
-            w2r.position.x = CGFloat(randomNum)
-            w2l.position.x = w2r.position.x - space2
+            
+                w2r.position.y = (w1r.position.y + wallspace)
+                w2l.position.y = (w1l.position.y + wallspace)
+                w2r.position.x = CGFloat(randomNum)
+                w2l.position.x = w2r.position.x - space2
+            
+            
           
         }
         
         if w3r.position.y <= bottomremoving && w2r.position.y <= topplacing{
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
-            w3r.position.y = (w2r.position.y + wallspace)
-            w3l.position.y = (w2l.position.y + wallspace)
-            w3r.position.x = CGFloat(randomNum)
-            w3l.position.x = w3r.position.x - space3
+            
+                w3r.position.y = (w2r.position.y + wallspace)
+                w3l.position.y = (w2l.position.y + wallspace)
+                w3r.position.x = CGFloat(randomNum)
+                w3l.position.x = w3r.position.x - space3
+            
+            
         
         }
         
         if w4r.position.y <= bottomremoving && w2r.position.y <= topplacing{
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
-            w4r.position.y = (w3r.position.y + wallspace)
-            w4l.position.y = (w3l.position.y + wallspace)
-        
-            w4r.position.x = CGFloat(randomNum)
-            w4l.position.x = w4r.position.x - space4
-          
-        }
-     
-        if (w1r.position.y - figurypos <= scoreabstand && w1r.position.y - figurypos >= -scoreabstand) || (w2r.position.y - figurypos <= scoreabstand && w2r.position.y - figurypos >= -scoreabstand) || (w3r.position.y - figurypos <= scoreabstand && w3r.position.y - figurypos >= -scoreabstand) || (w4r.position.y - figurypos <= scoreabstand && w4r.position.y - figurypos >= -scoreabstand) {
-            GameScene.score += 1
-            scorelabels.text = String(GameScene.score)
-            if GameScene.score >= GameScene.highscore {
-                GameScene.highscore = GameScene.score
-                numberhighscore.text = String(GameScene.highscore)
+            if (!modechanges){
+                w4r.position.y = (w3r.position.y + wallspace)
+                w4l.position.y = (w3l.position.y + wallspace)
+                w4r.position.x = CGFloat(randomNum)
+                w4l.position.x = w4r.position.x - space4
             }
         }
+     
+        scorefunc()
     }
     
     
     func move(){
+        
         w1r.position.y = w1r.position.y - walldownspeed
         w2r.position.y = w2r.position.y - walldownspeed
         w3r.position.y = w3r.position.y - walldownspeed
@@ -366,7 +390,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             w4l.position.x = w4l.position.x - wallsidespeed
         }
     }
-    
+    func scorefunc(){
+        if (w1r.position.y - figurypos <= scoreabstand && w1r.position.y - figurypos >= -scoreabstand) || (w2r.position.y - figurypos <= scoreabstand && w2r.position.y - figurypos >= -scoreabstand) || (w3r.position.y - figurypos <= scoreabstand && w3r.position.y - figurypos >= -scoreabstand) || (w4r.position.y - figurypos <= scoreabstand && w4r.position.y - figurypos >= -scoreabstand) {
+            GameScene.score += 1
+            scorelabels.text = String(GameScene.score)
+            if GameScene.score >= GameScene.highscore {
+                GameScene.highscore = GameScene.score
+                numberhighscore.text = String(GameScene.highscore)
+            }
+        }
+    }
+    func modechange_placing(){
+        
+        
+        randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+        w1r.position.x = CGFloat(randomNum)
+        w1l.position.x = w1r.position.x - space1
+        randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+        w2r.position.x = CGFloat(randomNum)
+        w2l.position.x = w2r.position.x - space2
+        randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+        w3r.position.x = CGFloat(randomNum)
+        w3l.position.x = w3r.position.x - space3
+        randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+        w4r.position.x = CGFloat(randomNum)
+        w4l.position.x = w4r.position.x - space4
+        
+        w1r.position.y = topplacing
+        w1l.position.y = topplacing
+        w2r.position.y = w1r.position.y + wallspace
+        w2l.position.y = w1r.position.y + wallspace
+        w3r.position.y = w2r.position.y + wallspace
+        w3l.position.y = w2r.position.y + wallspace
+        w4r.position.y = w3r.position.y + wallspace
+        w4l.position.y = w3r.position.y + wallspace
+        
+    }
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         if pausee{
@@ -378,14 +437,105 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                 }
             }else{
                 if firstgamec{
-                    firstgame()
+                firstgame()
                 }else{
-                    walls()
-                    check()
-                    move()
+                    if (!modechanges && GameScene.score % 15 == 0) {
+                        modechanges = true
+                        scoresafe = GameScene.score
+                    }
+                    if (modechanges && GameScene.score == scoresafe + 10){
+                        scoresafe = -20
+                        modechanges = false
+                        changed = true
+                        gyro = false
+                    }
+                    
+                    if (modechanges) {
+                        if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
+                            
+                            gyro = true
+                            scorefunc()
+                            randmin = 300
+                            
+                            walldownspeed = 5
+                            wallspace = 1000
+                            space1 = 1000
+                            space2 = 1000
+                            space3 = 1000
+                            space4 = 1000
+                            modechange_placing()
+                        }else{
+                            if (gyro){
+                                move()
+                                check()
+                        
+                                walls()
+                            }else{
+                            move()
+                            
+                            scorefunc()
+                            walls()
+                            }
+                        }
+                    } else {
+                        gyro = false
+                        if (changed){
+                            
+                            if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
+                                
+                                randmin = 200
+                                wallspace = 320
+                                space1 = 895
+                                space2 = 895
+                                space3 = 895
+                                space4 = 895
+                                modechange_placing()
+                                changed = false
+                                
+                            }else{
+                                move()
+                                scorefunc()
+                                walls()
+                            }
+                            
+                        }else{
+                        move()
+                        check()
+                       walls()
+                        }
+                        }
+                    }
                 }
             }
         }
     }
-}
 
+/*if (gyro == true){
+ if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
+ 
+ gyro = false
+ print(gyro)
+ 
+ }else{
+ print ("help")
+ walls()
+ scorefunc()
+ move()
+ }
+ }else{
+ randmin = 200
+ wallspace = 320
+ space1 = 895
+ space2 = 895
+ space3 = 895
+ space4 = 895
+ 
+ walls()
+ check()
+ move()
+ print ("ka")
+ if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
+ check()
+ }
+ }
+ */
