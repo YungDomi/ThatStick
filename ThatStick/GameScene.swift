@@ -205,7 +205,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     override func didSimulatePhysics() {
         // 1
         // Set velocity based on x-axis acceleration
-        if gyro{
+        
         if pausee {
             
         }else{
@@ -213,10 +213,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             if gamepause{
                 
             }else{
-        
+        if !gyro{
+            if (xAcceleration != 0){
+                xAcceleration = 0
+            }
+        }else{
+            
             stick.physicsBody?.velocity = CGVector(dx: xAcceleration * gyrosens, dy: stick.physicsBody!.velocity.dy)
+                }
         }
-        }
+        
     }
     
     
@@ -480,6 +486,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                             }
                         }
                     } else {
+                          xAcceleration = 0
                         if (changed){
                             
                             if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
@@ -493,6 +500,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                                 modechange_placing()
                                 changed = false
                                 gyro = false
+                                xAcceleration = 0
                                 
                             }else{
                                 move()
