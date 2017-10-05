@@ -32,8 +32,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var w4r = SKSpriteNode()
     var w4l = SKSpriteNode()
     
-    var scorelabels = SKLabelNode()
-    var scorelabel = SKLabelNode()
+    var numberscore = SKLabelNode()
+    var labelscore = SKLabelNode()
     var scoreabstand = CGFloat()
     
     //Variabblen für Gyrosensor
@@ -99,8 +99,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         w4r = self.childNode(withName: "w4r") as! SKSpriteNode
         w4l = self.childNode(withName: "w4l") as! SKSpriteNode
         header = self.childNode(withName: "header") as! SKSpriteNode
-        scorelabels = self.childNode(withName: "scorelabels") as! SKLabelNode
-        scorelabel = self.childNode(withName: "scorelabel") as! SKLabelNode
+        numberscore = self.childNode(withName: "numberscore") as! SKLabelNode
+        labelscore = self.childNode(withName: "labelscore") as! SKLabelNode
         stick = self.childNode(withName: "stick") as! SKSpriteNode
         labelhighscore = self.childNode(withName: "labelhighscore") as! SKLabelNode
         numberhighscore = self.childNode(withName: "numberhighscore") as! SKLabelNode
@@ -110,7 +110,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     //Wird beim Programmstart aufgerufen und setzt Standardwerte.
     func setup(){
-    //veränderbare Werte
+        //veränderbare Werte
         //Minimal und Maximalzahlen damit die Wände ihre "Öffnungen" nicht ausserhalb des Screens haben wenn sie Randim generiert werden.
         borderMax = 696
         borderMin = 200
@@ -168,9 +168,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         w4l.zPosition = -1
         w4r.zPosition = -1
         header.zPosition = 0
-        scorelabel.zPosition = 0
-        scorelabels.zPosition = 0
-        scorelabels.text = String(0)
+        labelscore.zPosition = 0
+        numberscore.zPosition = 0
+        numberscore.text = String(0)
         
         setSpaces(abstand: wallleftrightspace)
         settop()
@@ -295,7 +295,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }
     }
     
-    
+    /*
+     "Check"t ob eine Wand bereits unten angekommen ist (bottomremoving) und ob die vorherige Wand bereits zurückgesetzt wurde (topplacing). Wenn ja, setzt es die entsprechende Wand im definiertem Y-Abstand (wallbottumupspace) und setzt die X-Koordinate Random
+     */
     func check(){
         if w1r.position.y <= bottomremoving && w4r.position.y <= topplacing{
             randomNum = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
@@ -404,7 +406,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         scoreabstand = walldownspeed / 2
         if (w1r.position.y - figurypos <= scoreabstand && w1r.position.y - figurypos >= -scoreabstand) || (w2r.position.y - figurypos <= scoreabstand && w2r.position.y - figurypos >= -scoreabstand) || (w3r.position.y - figurypos <= scoreabstand && w3r.position.y - figurypos >= -scoreabstand) || (w4r.position.y - figurypos <= scoreabstand && w4r.position.y - figurypos >= -scoreabstand) {
             GameScene.score += 1
-            scorelabels.text = String(GameScene.score)
+            numberscore.text = String(GameScene.score)
             if GameScene.score >= GameScene.highscore {
                 GameScene.highscore = GameScene.score
                 numberhighscore.text = String(GameScene.highscore)
@@ -412,8 +414,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }
     }
     
-    //Sorgt dafür, dass alle Wände neu von oben kommen (Vewendet bei einem Wechsel der Steuerung)
-    //Wurde übersichthalber und für spätere allfällige Verwendungen in zwei verschiedene Methoden ausgelagert
+    /*
+     Sorgt dafür, dass alle Wände neu von oben kommen (Vewendet bei einem Wechsel der Steuerung)
+     Wurde übersichthalber und für spätere allfällige Verwendungen in zwei verschiedene Methoden ausgelagert
+     */
     func modechange_placing(){
         modechange_placing_Breite()
         modechange_placing_Hoehe()
