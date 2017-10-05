@@ -110,7 +110,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     //Wird beim Programmstart aufgerufen und setzt Standardwerte.
     func setup(){
-    //veränderbare Werte
+        //veränderbare Werte
         //Minimal und Maximalzahlen damit die Wände ihre "Öffnungen" nicht ausserhalb des Screens haben wenn sie Randim generiert werden.
         randmax = 696
         randmin = 200
@@ -139,11 +139,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         let gos = GameOverScene()
         GameScene.highscore = integer_t(gos.getHighScore())
         
-    //nicht verändern
-        scoreabstand = walldownspeed / 2
+        //nicht verändern
         controller = false
         scoresafe = -20
-        
         
         //max 1000 min 895
         wallleftrightspace = 895
@@ -461,13 +459,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                             gyro = true
                             scorefunc()
                             randmin = 300
-                            walldownspeed = 5
+                            walldownspeed = 10
                             wallbottomupspace = 1000
                             wallleftrightspace = 1000
-                            space1 = wallleftrightspace
-                            space2 = wallleftrightspace
-                            space3 = wallleftrightspace
-                            space4 = wallleftrightspace
+                            setSpaces(abstand: wallleftrightspace)
                             modechange_placing()
                         }else{
                             if (gyro){
@@ -485,12 +480,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                         if (changed){
                             if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
                                 randmin = 200
+                                walldownspeed = 5
                                 wallbottomupspace = 320
                                 wallleftrightspace = 895
-                                space1 = wallleftrightspace
-                                space2 = wallleftrightspace
-                                space3 = wallleftrightspace
-                                space4 = wallleftrightspace
+                                setSpaces(abstand: wallleftrightspace)
                                 modechange_placing()
                                 changed = false
                                 gyro = false
@@ -509,5 +502,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                 }
             }
         }
+    }
+    func setSpaces(abstand: CGFloat) {
+        space1 = abstand
+        space2 = abstand
+        space3 = abstand
+        space4 = abstand
     }
 }
