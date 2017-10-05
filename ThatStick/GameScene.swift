@@ -75,7 +75,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var changed = Bool()
     
     
-    
+    //Konstruktor
     override func didMove(to view: SKView) {
         //Prüft ob ein Doppelklick gemacht wird (um anschliessend das game zu pausieren)
         let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
@@ -172,6 +172,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         numberscore.zPosition = 0
         numberscore.text = String(0)
         
+        setLeftRight()
         setSpaces(abstand: wallleftrightspace)
         settop()
         randomPlacer()
