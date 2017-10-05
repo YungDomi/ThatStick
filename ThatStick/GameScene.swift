@@ -15,6 +15,7 @@ import CoreMotion
 
 class GameScene: SKScene, SKPhysicsContactDelegate  {
     static var score = integer_t()
+    static var highscore = integer_t()
     var gamepause = Bool()
     var pausee = Bool()
     var stick = SKSpriteNode()
@@ -29,11 +30,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var scorelabels = SKLabelNode()
     var scorelabel = SKLabelNode()
     
+<<<<<<< HEAD
     // Motion manager for accelerometer
     let motionManager = CMMotionManager()
     
     // Acceleration value from accelerometer
     var xAcceleration: CGFloat = 0.0
+=======
+    var labelhighscore = SKLabelNode()
+    var numberhighscore = SKLabelNode()
+    
+>>>>>>> 174cea0dca551745781478baea1640ef1c520734
     
     var header = SKSpriteNode()
     var scorebool = Bool()
@@ -96,6 +103,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         scorelabels = self.childNode(withName: "scorelabels") as! SKLabelNode
         scorelabel = self.childNode(withName: "scorelabel") as! SKLabelNode
         stick = self.childNode(withName: "stick") as! SKSpriteNode
+        labelhighscore = self.childNode(withName: "labelhighscore") as! SKLabelNode
+        numberhighscore = self.childNode(withName: "numberhighscore") as! SKLabelNode
+        
         
         setup()
     }
@@ -116,6 +126,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         wallspace = 1000
         
         
+        //Highscore
+        let gos = GameOverScene()
+        GameScene.highscore = integer_t(gos.getHighScore())
         //nicht verändern
         space1 = 895
         space2 = 895
@@ -126,6 +139,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         links3 = false
         links4 = true
         GameScene.score = 0
+        numberhighscore.text = String(gos.getHighScore())
         firstgamec = true
         w1l.zPosition = -1
         w1r.zPosition = -1
@@ -274,7 +288,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             if scorebool {
                 GameScene.score += 1
                 scorelabels.text = String(GameScene.score)
+                if GameScene.score >= GameScene.highscore {
+                    GameScene.highscore = GameScene.score
+                    numberhighscore.text = String(GameScene.highscore)
+                }
             }
+            
             scorebool = false
         }
         
