@@ -108,7 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         setup()
     }
     
-    //Wird beim Programmstart aufgerufen und setzt Standardwerte. 
+    //Wird beim Programmstart aufgerufen und setzt Standardwerte.
     func setup(){
     //veränderbare Werte
         //Minimal und Maximalzahlen damit die Wände ihre "Öffnungen" nicht ausserhalb des Screens haben wenn sie Randim generiert werden.
@@ -156,6 +156,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         changed = false
         modechanges = false
         firstgamec = true
+        game_over = false
         
         //Standardwerte in welche (linksrechts) Richtung die Wände sich bewegen
         links1 = false
@@ -183,8 +184,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         
         settop()
         randomPlacer()
-        
-        game_over = false
     }
     
     func randomPlacer(){
@@ -213,28 +212,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         w4r.position.y = topplacing
     }
     
-    override func didSimulatePhysics() {
-        if game_paused {
-            
-        }else{
-        }
-        if game_over{
-            
-        }else{
-            if !gyro{
-                if (xAcceleration != 0){
-                    xAcceleration = 0
-                }
-            }else{
-                
-                stick.physicsBody?.velocity = CGVector(dx: xAcceleration * gyrosens, dy: stick.physicsBody!.velocity.dy)
-            }
-        }
-        
-    }
-    
-    
-    
     //Erstes Spiel: Dafür da, dass Balken von oben kommen und man nicht direkt ausweichen muss.
     func firstgame(){
         if (w4r.position.y >= bottomremoving){
@@ -257,8 +234,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         walls()
     }
     
+    override func didSimulatePhysics() {
+        if game_paused {
+            //do nothing
+        }else{
+        }
+        if game_over{
+            //do nothing
+        }else{
+            if !gyro{
+                if (xAcceleration != 0){
+                    xAcceleration = 0
+                }
+            }else{
+                stick.physicsBody?.velocity = CGVector(dx: xAcceleration * gyrosens, dy: stick.physicsBody!.velocity.dy)
+            }
+        }
+    }
+    
     override func touchesMoved( _ touches: Set<UITouch>, with event: UIEvent?){
         if game_paused {
+            //Im Pausemenu kann man durch Bewegung des Sticks direkt weiterspielen.
             game_paused = !game_paused
         }else{
             if game_over {
@@ -273,6 +269,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }
     }
     
+    //Pausiert das Spiel bei einem Doppeltipp
     @objc func doubleTapped() {
         game_paused = !game_paused
     }
@@ -326,7 +323,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         scorefunc()
     }
     
-    
+    //Bewegt die Wände in selbst definierbaren Temo nach unten.
     func move(){
         w1r.position.y = w1r.position.y - walldownspeed
         w2r.position.y = w2r.position.y - walldownspeed
@@ -338,6 +335,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         w4l.position.y = w4l.position.y - walldownspeed
     }
     
+    //Bewegt die Wände seitwärts
     func walls(){
         if w1r.position.x <= CGFloat(randmin){
             links1 = true
@@ -390,6 +388,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }
     }
     
+    //Aktualisiert den Score und allenfalls den Highscore
     func scorefunc(){
         scoreabstand = walldownspeed / 2
         if (w1r.position.y - figurypos <= scoreabstand && w1r.position.y - figurypos >= -scoreabstand) || (w2r.position.y - figurypos <= scoreabstand && w2r.position.y - figurypos >= -scoreabstand) || (w3r.position.y - figurypos <= scoreabstand && w3r.position.y - figurypos >= -scoreabstand) || (w4r.position.y - figurypos <= scoreabstand && w4r.position.y - figurypos >= -scoreabstand) {
@@ -402,6 +401,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }
     }
     
+    //Sorgt dafür dass alle Wände neu von oben kommen (Vewendet bei einem Wechsel der Steuerung)
     func modechange_placing(){
         randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
         w1r.position.x = CGFloat(randomNum)
@@ -431,7 +431,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
      Regelt die verschiedenen "Levels" und Arten der Steuerungen
      Sehr komplizierte Methode; Übergänge zwischen den Steuerungs-Arten müssen mit sehr vielen Abfregen korrekt in die Wege geleitet werden.
      Hat für obig beschriebenen Prozess auch sehr viele Sub-Methoden.
- */
+     */
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         if game_paused{
