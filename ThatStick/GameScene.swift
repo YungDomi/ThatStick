@@ -115,7 +115,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     func setup(){
         //veränderbare Werte
-        randmax = 696
+        randmax = 796
         randmin = 200
         figdelay = 0
         walldownspeed = 5
@@ -127,7 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         gyrosens = 1000
         
         //nicht unter 320!!
-        wallspace = 750
+        wallspace = 320
         
         
         //Highscore
@@ -136,10 +136,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         //nicht verändern
         scoreabstand = walldownspeed / 2
         gyro = false
-        space1 = 895
-        space2 = 895
-        space3 = 895
-        space4 = 895
+        
+        //max 1000 min 895
+        space1 = 1000
+        space2 = 1000
+        space3 = 1000
+        space4 = 1000
+        
+        
         links1 = false
         links2 = true
         links3 = false
