@@ -88,7 +88,7 @@ class GameOverScene: SKScene {
         numberscore.text = String(describing: GameScene.score)
         numberhighscore.text = String(describing: GameScene.highscore)
         
-        if (GameScene.score == GameScene.highscore) {
+        if (GameScene.score >= GameScene.highscore) {
             labelhighscore.isHidden = true
             numberhighscore.isHidden = true
             newhighscore.isHidden = false
