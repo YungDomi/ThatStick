@@ -91,7 +91,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             // 3
             let acceleration = CMAccelerometerData?.acceleration
             // 4
-            self.xAcceleration = (CGFloat((acceleration?.x)!) * 0.75) + (self.xAcceleration * 0.25)
+            self.xAcceleration = CGFloat((acceleration?.x)!)
             
             
         } )
@@ -205,6 +205,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     override func didSimulatePhysics() {
         // 1
         // Set velocity based on x-axis acceleration
+        if gyro{
         if pausee {
             
         }else{
@@ -212,11 +213,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             if gamepause{
                 
             }else{
-        if gyro{
+        
             stick.physicsBody?.velocity = CGVector(dx: xAcceleration * gyrosens, dy: stick.physicsBody!.velocity.dy)
         }
         }
     }
+    
     
     
     //Erstes Spiel: Dafür da, dass Balken von oben kommen und man nicht direkt ausweichen muss.
@@ -447,7 +449,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                         scoresafe = -20
                         modechanges = false
                         changed = true
-                        gyro = false
+                     
                     }
                     
                     if (modechanges) {
@@ -478,7 +480,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                             }
                         }
                     } else {
-                        gyro = false
                         if (changed){
                             
                             if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
@@ -491,6 +492,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                                 space4 = 895
                                 modechange_placing()
                                 changed = false
+                                gyro = false
                                 
                             }else{
                                 move()
@@ -510,32 +512,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }
     }
 
-/*if (gyro == true){
- if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
- 
- gyro = false
- print(gyro)
- 
- }else{
- print ("help")
- walls()
- scorefunc()
- move()
- }
- }else{
- randmin = 200
- wallspace = 320
- space1 = 895
- space2 = 895
- space3 = 895
- space4 = 895
- 
- walls()
- check()
- move()
- print ("ka")
- if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
- check()
- }
- }
- */
+
