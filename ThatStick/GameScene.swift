@@ -145,10 +145,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         
         //max 1000 min 895
         wallleftrightspace = 895
-        space1 = wallleftrightspace
-        space2 = wallleftrightspace
-        space3 = wallleftrightspace
-        space4 = wallleftrightspace
         
         gyro = false
         changed = false
@@ -180,10 +176,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         scorelabels.zPosition = 0
         scorelabels.text = String(0)
         
+        setSpaces(abstand: wallleftrightspace)
         settop()
         randomPlacer()
     }
     
+    //Sorgt dafür dass die Wände zufällig auf der X-Achse (jedoch im Screen) gespawnt werden.
     func randomPlacer(){
         randomNum1 = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
         w4r.position.x = CGFloat(randomNum1)
@@ -199,6 +197,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         w1l.position.x = w1r.position.x - space1
     }
     
+    //Setzt alle Wände nach oben (wird im Setup aufgerufen)
     func settop(){
         w1l.position.y = topplacing
         w1r.position.y = topplacing
@@ -208,6 +207,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         w3r.position.y = topplacing
         w4l.position.y = topplacing
         w4r.position.y = topplacing
+    }
+    
+    //Setzt die Abstände zwischen den Wänden (wird in der Main Funktion, sowie im Setup aufgerufen
+    func setSpaces(abstand: CGFloat) {
+        space1 = abstand
+        space2 = abstand
+        space3 = abstand
+        space4 = abstand
     }
     
     //Erstes Spiel: Dafür da, dass Balken von oben kommen und man nicht direkt ausweichen muss.
@@ -502,11 +509,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                 }
             }
         }
-    }
-    func setSpaces(abstand: CGFloat) {
-        space1 = abstand
-        space2 = abstand
-        space3 = abstand
-        space4 = abstand
     }
 }
