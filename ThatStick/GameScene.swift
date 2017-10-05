@@ -66,8 +66,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var topplacing = CGFloat()
     var figurypos = CGFloat()
     var figdelay = integer_t()
-    var randmax = integer_t()
-    var randmin = integer_t()
+    var borderMax = integer_t()
+    var borderMin = integer_t()
     var gyrosens = CGFloat()
     var controller = Bool()
     var modechanges = Bool()
@@ -110,10 +110,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     //Wird beim Programmstart aufgerufen und setzt Standardwerte.
     func setup(){
-        //veränderbare Werte
+    //veränderbare Werte
         //Minimal und Maximalzahlen damit die Wände ihre "Öffnungen" nicht ausserhalb des Screens haben wenn sie Randim generiert werden.
-        randmax = 696
-        randmin = 200
+        borderMax = 696
+        borderMin = 200
         
         //Geschwindigkeit der Wände
         walldownspeed = 5
@@ -135,6 +135,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         //Verzögerung (nicht empfohlen)
         figdelay = 0
         
+        //max 1000 min 895
+        wallleftrightspace = 895
+        
         //Highscore auf Gerät speichern
         let gos = GameOverScene()
         GameScene.highscore = integer_t(gos.getHighScore())
@@ -143,20 +146,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         controller = false
         scoresafe = -20
         
-        //max 1000 min 895
-        wallleftrightspace = 895
+        
         
         gyro = false
         changed = false
         modechanges = false
         firstgamec = true
         game_over = false
-        
-        //Standardwerte in welche (linksrechts) Richtung die Wände sich bewegen
-        links1 = false
-        links2 = true
-        links3 = false
-        links4 = true
         
         //Holt den Highscore beim Aufstarten auf dem Speicher des Endgeräts
         GameScene.score = 0
@@ -183,16 +179,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     //Sorgt dafür dass die Wände zufällig auf der X-Achse (jedoch im Screen) gespawnt werden.
     func randomPlacer(){
-        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
         w4r.position.x = CGFloat(randomNum1)
         w4l.position.x = w4r.position.x - space4
-        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
         w3r.position.x = CGFloat(randomNum1)
         w3l.position.x = w3r.position.x - space3
-        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
         w2r.position.x = CGFloat(randomNum1)
         w2l.position.x = w2r.position.x - space2
-        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+        randomNum1 = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
         w1r.position.x = CGFloat(randomNum1)
         w1l.position.x = w1r.position.x - space1
     }
@@ -215,6 +211,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         space2 = abstand
         space3 = abstand
         space4 = abstand
+    }
+    
+    //Standardwerte in welche (linksrechts) Richtung die Wände sich bewegen
+    func setLeftRight(){
+        links1 = false
+        links2 = true
+        links3 = false
+        links4 = true
     }
     
     //Erstes Spiel: Dafür da, dass Balken von oben kommen und man nicht direkt ausweichen muss.
@@ -294,7 +298,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     func check(){
         if w1r.position.y <= bottomremoving && w4r.position.y <= topplacing{
-            randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+            randomNum = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
             w1r.position.y = (w4r.position.y + wallbottomupspace)
             w1l.position.y = (w4l.position.y + wallbottomupspace)
             firstgamec = false
@@ -303,7 +307,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }
         
         if w2r.position.y <= bottomremoving && w1r.position.y <= topplacing{
-            randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+            randomNum = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
             w2r.position.y = (w1r.position.y + wallbottomupspace)
             w2l.position.y = (w1l.position.y + wallbottomupspace)
             w2r.position.x = CGFloat(randomNum)
@@ -311,7 +315,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }
         
         if w3r.position.y <= bottomremoving && w2r.position.y <= topplacing{
-            randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+            randomNum = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
             w3r.position.y = (w2r.position.y + wallbottomupspace)
             w3l.position.y = (w2l.position.y + wallbottomupspace)
             w3r.position.x = CGFloat(randomNum)
@@ -319,7 +323,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }
         
         if w4r.position.y <= bottomremoving && w2r.position.y <= topplacing{
-            randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+            randomNum = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
             if (!modechanges){
                 w4r.position.y = (w3r.position.y + wallbottomupspace)
                 w4l.position.y = (w3l.position.y + wallbottomupspace)
@@ -344,24 +348,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     //Bewegt die Wände seitwärts
     func walls(){
-        if w1r.position.x <= CGFloat(randmin){
+        if w1r.position.x <= CGFloat(borderMin){
             links1 = true
-        }else if w1r.position.x >= CGFloat(randmax-1){
+        }else if w1r.position.x >= CGFloat(borderMax-1){
             links1 = false
         }
-        if w2r.position.x <= CGFloat(randmin){
+        if w2r.position.x <= CGFloat(borderMin){
             links2 = true
-        }else if w2r.position.x >= CGFloat(randmax-1){
+        }else if w2r.position.x >= CGFloat(borderMax-1){
             links2 = false
         }
-        if w3r.position.x <= CGFloat(randmin){
+        if w3r.position.x <= CGFloat(borderMin){
             links3 = true
-        }else if w3r.position.x >= CGFloat(randmax-1){
+        }else if w3r.position.x >= CGFloat(borderMax-1){
             links3 = false
         }
-        if w4r.position.x <= CGFloat(randmin){
+        if w4r.position.x <= CGFloat(borderMin){
             links4 = true
-        }else if w4r.position.x >= CGFloat(randmax-1){
+        }else if w4r.position.x >= CGFloat(borderMax-1){
             links4 = false
         }
         
@@ -408,21 +412,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         }
     }
     
-    //Sorgt dafür dass alle Wände neu von oben kommen (Vewendet bei einem Wechsel der Steuerung)
+    //Sorgt dafür, dass alle Wände neu von oben kommen (Vewendet bei einem Wechsel der Steuerung)
+    //Wurde übersichthalber und für spätere allfällige Verwendungen in zwei verschiedene Methoden ausgelagert
     func modechange_placing(){
-        randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+        modechange_placing_Breite()
+        modechange_placing_Hoehe()
+    }
+    
+    //Setzt die Wände an einer zufälligen X-Position die im Screen liegt
+    func modechange_placing_Breite(){
+        randomNum = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
         w1r.position.x = CGFloat(randomNum)
         w1l.position.x = w1r.position.x - space1
-        randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+        randomNum = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
         w2r.position.x = CGFloat(randomNum)
         w2l.position.x = w2r.position.x - space2
-        randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+        randomNum = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
         w3r.position.x = CGFloat(randomNum)
         w3l.position.x = w3r.position.x - space3
-        randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
+        randomNum = integer_t(Int(arc4random_uniform(UInt32(borderMax) - UInt32(borderMin)) + UInt32(borderMin)))
         w4r.position.x = CGFloat(randomNum)
         w4l.position.x = w4r.position.x - space4
-        
+    }
+    
+    //Setzt die Wände im richtigen Höhen-Abstand zueinander
+    func modechange_placing_Hoehe(){
         w1r.position.y = topplacing
         w1l.position.y = topplacing
         w2r.position.y = w1r.position.y + wallbottomupspace
@@ -465,7 +479,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                         if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
                             gyro = true
                             scorefunc()
-                            randmin = 300
+                            borderMin = 300
                             walldownspeed = 10
                             wallbottomupspace = 1000
                             wallleftrightspace = 1000
@@ -486,7 +500,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                         xAcceleration = 0
                         if (changed){
                             if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
-                                randmin = 200
+                                borderMin = 200
                                 walldownspeed = 5
                                 wallbottomupspace = 320
                                 wallleftrightspace = 895
