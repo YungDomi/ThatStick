@@ -16,9 +16,12 @@ import CoreMotion
 class GameScene: SKScene, SKPhysicsContactDelegate  {
     static var score = integer_t()
     static var highscore = integer_t()
-    var gamepause = Bool()
-    var pausee = Bool()
     
+    //Booleans zur Prüfung ob Game fertig oder pausiert ist
+    var game_over = Bool()
+    var game_paused = Bool()
+    
+    //Grafische Objekte
     var stick = SKSpriteNode()
     var w1r = SKSpriteNode()
     var w1l = SKSpriteNode()
@@ -74,11 +77,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     
     override func didMove(to view: SKView) {
-        //Prüft ob ein Doppelklick gemacht wird (um anschliessend das game zu pausieren=
+        //Prüft ob ein Doppelklick gemacht wird (um anschliessend das game zu pausieren)
         let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
         tap.numberOfTapsRequired = 2
         view.addGestureRecognizer(tap)
         
+        //Handelt die Gyrosensor Steuerung
         motionManager.accelerometerUpdateInterval = 0.001
         motionManager.startAccelerometerUpdates(to: OperationQueue.current!, withHandler: { (CMAccelerometerData, NSError) in
             let acceleration = CMAccelerometerData?.acceleration
@@ -104,31 +108,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         setup()
     }
     
+    //Wird beim Programmstart aufgerufen und setzt Standardwerte. 
     func setup(){
-        //veränderbare Werte
+    //veränderbare Werte
+        //Minimal und Maximalzahlen damit die Wände ihre "Öffnungen" nicht ausserhalb des Screens haben wenn sie Randim generiert werden.
         randmax = 696
         randmin = 200
-        figdelay = 0
         
+        //Geschwindigkeit der Wände
         walldownspeed = 5
         wallsidespeed = 1
+        
+        //Y-Koordinate ab welchem Punkt die Wände gelöscht und wieder gespawnt werden
         bottomremoving = -650
         topplacing = 640
+        
         //Höhe der Figur auf dem Screen
         figurypos = -355
+        
         //gyrosensor sensibilität
         gyrosens = 1000
-        modechanges = false
+        
         //nicht unter 320!!
         wallbottomupspace = 320
         
-        
+        //Verzögerung (nicht empfohlen)
+        figdelay = 0
         
         //Highscore auf Gerät speichern
         let gos = GameOverScene()
         GameScene.highscore = integer_t(gos.getHighScore())
         
-        //nicht verändern
+    //nicht verändern
         scoreabstand = walldownspeed / 2
         controller = false
         scoresafe = -20
@@ -143,15 +154,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         
         gyro = false
         changed = false
+        modechanges = false
+        firstgamec = true
         
+        //Standardwerte in welche (linksrechts) Richtung die Wände sich bewegen
         links1 = false
         links2 = true
         links3 = false
         links4 = true
+        
+        //Holt den Highscore beim Aufstarten auf dem Speicher des Endgeräts
         GameScene.score = 0
         numberhighscore.text = String(gos.getHighScore())
-        firstgamec = true
         
+        //Definiert die Tiefe (vorne/hinten btw nah/fern) der Objekte
         w1l.zPosition = -1
         w1r.zPosition = -1
         w2l.zPosition = -1
@@ -168,7 +184,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         settop()
         randomPlacer()
         
-        gamepause = false
+        game_over = false
     }
     
     func randomPlacer(){
@@ -198,11 +214,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     }
     
     override func didSimulatePhysics() {
-        if pausee {
+        if game_paused {
             
         }else{
         }
-        if gamepause{
+        if game_over{
             
         }else{
             if !gyro{
@@ -242,10 +258,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     }
     
     override func touchesMoved( _ touches: Set<UITouch>, with event: UIEvent?){
-        if pausee {
-            pausee = !pausee
+        if game_paused {
+            game_paused = !game_paused
         }else{
-            if gamepause {
+            if game_over {
             }else{
                 if (gyro == false){
                     for touch in touches{
@@ -258,7 +274,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     }
     
     @objc func doubleTapped() {
-        pausee = !pausee
+        game_paused = !game_paused
     }
     
     //Ruft ein Gameover bei einer Kolission hervor
@@ -267,7 +283,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         let contactA:SKPhysicsBody = contact.bodyA
         let contactB:SKPhysicsBody = contact.bodyB
         if contactA.categoryBitMask == 2 || contactB.categoryBitMask == 2 {
-            gamepause = true
+            game_over = true
         }
     }
     
@@ -418,9 +434,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
  */
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        if pausee{
+        if game_paused{
         }else {
-            if gamepause {
+            if game_over {
                 if let scene = GameOverScene(fileNamed: "GameOverScene") {
                     scene.scaleMode = .aspectFill
                     view?.presentScene(scene)
