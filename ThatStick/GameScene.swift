@@ -32,6 +32,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var labelhighscore = SKLabelNode()
     var numberhighscore = SKLabelNode()
     
+    
     var header = SKSpriteNode()
     var scorebool = Bool()
     var links1 = Bool()
@@ -99,6 +100,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         wallspace = 320
         
         
+        //Highscore
+        let gos = GameOverScene()
+        GameScene.highscore = integer_t(gos.getHighScore())
         //nicht verändern
         space1 = 895
         space2 = 895
@@ -109,7 +113,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         links3 = false
         links4 = true
         GameScene.score = 0
-        numberhighscore.text = String(GameScene.highscore)
+        numberhighscore.text = String(gos.getHighScore())
         firstgamec = true
         w1l.zPosition = -1
         w1r.zPosition = -1
