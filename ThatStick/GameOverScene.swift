@@ -13,7 +13,6 @@ import GameplayKit
 
 
 class GameOverScene: SKScene {
-    //var labelscore = SKLabelNode()
     var numberscore = SKLabelNode()
     var labelhighscore = SKLabelNode()
     var numberhighscore = SKLabelNode()
@@ -37,7 +36,6 @@ class GameOverScene: SKScene {
         view.addGestureRecognizer(tap)
         
         //Zeigt Scores, Higscore und wenn ein neuer Highscore geknackt wurde
-        //labelscore = self.childNode(withName: "labelscore") as! SKLabelNode
         numberscore = self.childNode(withName: "numberscore") as! SKLabelNode
         labelhighscore = self.childNode(withName: "labelhighscore") as! SKLabelNode
         numberhighscore = self.childNode(withName: "numberhighscore") as! SKLabelNode
@@ -56,7 +54,6 @@ class GameOverScene: SKScene {
     
     
     @objc func updateCounting(){
-        
         if tapplay.fontSize <= 50 {
             kleiner = true
         }
