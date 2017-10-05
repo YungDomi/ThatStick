@@ -13,8 +13,11 @@ import GameplayKit
 
 
 class GameOverScene: SKScene {
-    var labelscore = SKLabelNode()
+    //var labelscore = SKLabelNode()
     var numberscore = SKLabelNode()
+    var labelhighscore = SKLabelNode()
+    var numberhighscore = SKLabelNode()
+    var newhighscore = SKLabelNode()
     var tapplay = SKLabelNode()
     var timer = Timer()
     var kleiner = Bool()
@@ -30,8 +33,11 @@ class GameOverScene: SKScene {
         tap.numberOfTapsRequired = 2
         view.addGestureRecognizer(tap)
         
-        labelscore = self.childNode(withName: "labelscore") as! SKLabelNode
+        //labelscore = self.childNode(withName: "labelscore") as! SKLabelNode
         numberscore = self.childNode(withName: "numberscore") as! SKLabelNode
+        labelhighscore = self.childNode(withName: "labelhighscore") as! SKLabelNode
+        numberhighscore = self.childNode(withName: "numberhighscore") as! SKLabelNode
+        newhighscore = self.childNode(withName: "newhighscore") as! SKLabelNode
         
         setup()
         score()
@@ -59,13 +65,28 @@ class GameOverScene: SKScene {
     }
     
     func setup(){
-        labelscore.zPosition = 0
+        //labelscore.zPosition = 0
         numberscore.zPosition = 0
         numberscore.text = String(0)
+        
+        labelhighscore.zPosition = 0
+        numberhighscore.zPosition = 0
+        numberhighscore.text = String(0)
+        
+        newhighscore.zPosition = 0
+        newhighscore.isHidden = true
     }
     
     func score(){
         numberscore.text = String(describing: GameScene.score)
+        numberhighscore.text = String(describing: GameScene.highscore)
+        
+        if (GameScene.score == GameScene.highscore) {
+            labelhighscore.isHidden = true
+            numberhighscore.isHidden = true
+            newhighscore.isHidden = false
+        }
+            
     }
     
     @objc func doubleTapped() {
