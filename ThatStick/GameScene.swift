@@ -30,20 +30,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var scorelabels = SKLabelNode()
     var scorelabel = SKLabelNode()
     
-<<<<<<< HEAD
+    var scoreabstand = CGFloat()
+    
+    
     // Motion manager for accelerometer
     let motionManager = CMMotionManager()
     
     // Acceleration value from accelerometer
     var xAcceleration: CGFloat = 0.0
-=======
+    
     var labelhighscore = SKLabelNode()
     var numberhighscore = SKLabelNode()
     
->>>>>>> 174cea0dca551745781478baea1640ef1c520734
+    
     
     var header = SKSpriteNode()
-    var scorebool = Bool()
+    //var scorebool = Bool()
     var links1 = Bool()
     var links2 = Bool()
     var links3 = Bool()
@@ -53,6 +55,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var space3 = CGFloat()
     var space4 = CGFloat()
     var firstgamec = Bool()
+    var gyro = Bool()
     
     var randomNum1 = integer_t()
     var randomNum = integer_t()
@@ -87,8 +90,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             
             
         } )
-       
-       
+        
+        
         
         physicsWorld.contactDelegate = self
         w1r = self.childNode(withName: "w1r") as! SKSpriteNode
@@ -120,16 +123,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         bottomremoving = -650
         topplacing = 640
         figurypos = -355
+        //gyrosensor sensibilität
         gyrosens = 1000
         
         //nicht unter 320!!
-        wallspace = 1000
+        wallspace = 750
         
         
         //Highscore
         let gos = GameOverScene()
         GameScene.highscore = integer_t(gos.getHighScore())
         //nicht verändern
+        scoreabstand = walldownspeed / 2
+        gyro = false
         space1 = 895
         space2 = 895
         space3 = 895
@@ -175,7 +181,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         randomNum1 = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
         w1r.position.x = CGFloat(randomNum1)
         w1l.position.x = w1r.position.x - space1
-        scorebool = true
+        // scorebool = true
         gamepause = false
     }
     
@@ -183,9 +189,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         // 1
         // Set velocity based on x-axis acceleration
         
-        
-        stick.physicsBody?.velocity = CGVector(dx: xAcceleration * gyrosens, dy: stick.physicsBody!.velocity.dy)
        
+            stick.physicsBody?.velocity = CGVector(dx: xAcceleration * gyrosens, dy: stick.physicsBody!.velocity.dy)
+        
         
     }
     
@@ -213,15 +219,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     }
     
     override func touchesMoved( _ touches: Set<UITouch>, with event: UIEvent?){
-        
         if pausee {
             pausee = !pausee
         }else{
             if gamepause {
             }else{
-                for touch in touches{
-                    let location = touch.location(in: self)
-                    stick.run(SKAction.moveTo(x: location.x, duration: TimeInterval(figdelay)))
+         
+                    for touch in touches{
+                        let location = touch.location(in: self)
+                        stick.run(SKAction.moveTo(x: location.x, duration: TimeInterval(figdelay)))
+                    
                 }
             }
         }
@@ -246,12 +253,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     
     
     func check(){
-        
         if w1r.position.y <= bottomremoving && w4r.position.y <= topplacing{
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
             w1r.position.y = (w4r.position.y + wallspace)
             w1l.position.y = (w4l.position.y + wallspace)
-            scorebool = true
             firstgamec = false
             w1r.position.x = CGFloat(randomNum)
             w1l.position.x = w1r.position.x - space1
@@ -261,45 +266,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
             w2r.position.y = (w1r.position.y + wallspace)
             w2l.position.y = (w1l.position.y + wallspace)
-            scorebool = true
             w2r.position.x = CGFloat(randomNum)
             w2l.position.x = w2r.position.x - space2
+          
         }
         
         if w3r.position.y <= bottomremoving && w2r.position.y <= topplacing{
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
             w3r.position.y = (w2r.position.y + wallspace)
             w3l.position.y = (w2l.position.y + wallspace)
-            scorebool = true
             w3r.position.x = CGFloat(randomNum)
             w3l.position.x = w3r.position.x - space3
+        
         }
         
         if w4r.position.y <= bottomremoving && w2r.position.y <= topplacing{
             randomNum = integer_t(Int(arc4random_uniform(UInt32(randmax) - UInt32(randmin)) + UInt32(randmin)))
             w4r.position.y = (w3r.position.y + wallspace)
             w4l.position.y = (w3l.position.y + wallspace)
-            scorebool = true
+        
             w4r.position.x = CGFloat(randomNum)
             w4l.position.x = w4r.position.x - space4
+          
         }
-        
-        if w1r.position.y <= figurypos || w2r.position.y <= figurypos || w3r.position.y <= figurypos || w4r.position.y <= figurypos {
-            if scorebool {
-                GameScene.score += 1
-                scorelabels.text = String(GameScene.score)
-                if GameScene.score >= GameScene.highscore {
-                    GameScene.highscore = GameScene.score
-                    numberhighscore.text = String(GameScene.highscore)
-                }
+     
+        if (w1r.position.y - figurypos <= scoreabstand && w1r.position.y - figurypos >= -scoreabstand) || (w2r.position.y - figurypos <= scoreabstand && w2r.position.y - figurypos >= -scoreabstand) || (w3r.position.y - figurypos <= scoreabstand && w3r.position.y - figurypos >= -scoreabstand) || (w4r.position.y - figurypos <= scoreabstand && w4r.position.y - figurypos >= -scoreabstand) {
+            GameScene.score += 1
+            scorelabels.text = String(GameScene.score)
+            if GameScene.score >= GameScene.highscore {
+                GameScene.highscore = GameScene.score
+                numberhighscore.text = String(GameScene.highscore)
             }
-            
-            scorebool = false
         }
-        
-        
-        
     }
+    
+    
     func move(){
         w1r.position.y = w1r.position.y - walldownspeed
         w2r.position.y = w2r.position.y - walldownspeed
@@ -375,7 +376,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                 if firstgamec{
                     firstgame()
                 }else{
-                    
                     walls()
                     check()
                     move()
