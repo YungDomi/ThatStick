@@ -14,13 +14,10 @@ import GameplayKit
 import CoreMotion
 
 class GameScene: SKScene, SKPhysicsContactDelegate  {
+    //Global
     static var score = integer_t()
     static var highscore = integer_t()
-    
-    //Booleans zur Prüfung ob Game fertig oder pausiert ist
-    var game_over = Bool()
-    var game_paused = Bool()
-    
+
     //Grafische Objekte
     var stick = SKSpriteNode()
     var w1r = SKSpriteNode()
@@ -31,34 +28,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var w3l = SKSpriteNode()
     var w4r = SKSpriteNode()
     var w4l = SKSpriteNode()
-    
+    var header = SKSpriteNode()
     var numberscore = SKLabelNode()
     var labelscore = SKLabelNode()
-    var scoreabstand = CGFloat()
-    
-    //Variabblen für Gyrosensor
-    let motionManager = CMMotionManager()
-    var xAcceleration: CGFloat = 0.0
-    
     var labelhighscore = SKLabelNode()
     var numberhighscore = SKLabelNode()
     
-    var header = SKSpriteNode()
+    //Variablen für Gyrosensor
+    let motionManager = CMMotionManager()
+    var xAcceleration: CGFloat = 0.0
+    
+    //Booleans
     var links1 = Bool()
     var links2 = Bool()
     var links3 = Bool()
     var links4 = Bool()
+    var modechanges = Bool()
+    var changed = Bool()
+    var firstgamec = Bool()
+    var gyro = Bool()
+    var controller = Bool()
+    var game_over = Bool()
+    var game_paused = Bool()
+    var gyroAUS = Bool()
+    
+    //Floats
     var space1 = CGFloat()
     var space2 = CGFloat()
     var space3 = CGFloat()
     var space4 = CGFloat()
-    var firstgamec = Bool()
-    var gyro = Bool()
-    var controller = Bool()
-    
-    var randomNum1 = integer_t()
-    var randomNum = integer_t()
-    
     var wallbottomupspace = CGFloat()
     var wallleftrightspace = CGFloat()
     var walldownspeed = CGFloat()
@@ -66,13 +64,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var bottomremoving = CGFloat()
     var topplacing = CGFloat()
     var figurypos = CGFloat()
+    var gyrosens = CGFloat()
+    var scoreabstand = CGFloat()
+    
+    //Integers
     var figdelay = integer_t()
     var borderMax = integer_t()
     var borderMin = integer_t()
-    var gyrosens = CGFloat()
-    var modechanges = Bool()
     var scoresafe = integer_t()
-    var changed = Bool()
+    var randomNum1 = integer_t()
+    var randomNum = integer_t()
     
     
     //Konstruktor
@@ -109,18 +110,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         if let scene = self.scene {
             scene.backgroundColor = SKColor.black
         }
-        
         setup()
     }
     
     //Wird beim Programmstart aufgerufen und setzt Standardwerte. Hier können Werte angepasst werden.
     func setup(){
-        //veränderbare Werte
-        //Minimal und Maximalzahlen damit die Wände ihre "Öffnungen" nicht ausserhalb des Screens haben wenn sie Randim generiert werden.
+        //VERÄNDERBARE WERTE//
+        //Minimal und Maximalzahlen damit die Wände ihre "Öffnungen" nicht ausserhalb des Screens haben wenn sie Random generiert werden.
         borderMax = 696
         borderMin = 200
         
-        //Geschwindigkeit der Wände:     3: einfach 5: normal 10: expert
+        //Geschwindigkeit der Wände:     3: einfach (5: normal 10: expert 15: asian
         walldownspeed = 5
         wallsidespeed = 1
         
@@ -135,23 +135,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         gyrosens = 1000
         
         //nicht unter 320!!
-        wallbottomupspace = 320
+        wallbottomupspace = 420
         
         //Verzögerung (nicht empfohlen)
         figdelay = 0
         
         //max 1000 min 895
-        wallleftrightspace = 920
+        wallleftrightspace = 930
         
         //Highscore auf Gerät speichern
         let gos = GameOverScene()
         GameScene.highscore = integer_t(gos.getHighScore())
         
-        //nicht verändern
+        //Deaktiviert den Gyro Modus
+        gyroAUS = true
+        
+        //NICHT VERÄNDERBARE WERTE//
         scoresafe = -20
         controller = false
-        
-        
         gyro = false
         changed = false
         modechanges = false
@@ -162,20 +163,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         GameScene.score = 0
         numberhighscore.text = String(gos.getHighScore())
         
-        //Definiert die Tiefe (vorne/hinten btw nah/fern) der Objekte
-        w1l.zPosition = -1
-        w1r.zPosition = -1
-        w2l.zPosition = -1
-        w2r.zPosition = -1
-        w3l.zPosition = -1
-        w3r.zPosition = -1
-        w4l.zPosition = -1
-        w4r.zPosition = -1
-        header.zPosition = 0
-        labelscore.zPosition = 0
-        numberscore.zPosition = 0
-        numberscore.text = String(0)
-        
+        //Auslagerung einiger Definitionen der grafischen Objekte
+        setTiefe()
         setLeftRight()
         setSpaces(abstand: wallleftrightspace)
         settop()
@@ -224,6 +213,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         links2 = true
         links3 = false
         links4 = true
+    }
+    
+    //Definiert die Tiefe (vorne/hinten btw nah/fern) der Objekte
+    func setTiefe(){
+        w1l.zPosition = -1
+        w1r.zPosition = -1
+        w2l.zPosition = -1
+        w2r.zPosition = -1
+        w3l.zPosition = -1
+        w3r.zPosition = -1
+        w4l.zPosition = -1
+        w4r.zPosition = -1
+        header.zPosition = 0
+        labelscore.zPosition = 0
+        numberscore.zPosition = 0
+        numberscore.text = String(0)
     }
     
     //Erstes Spiel: Dafür da, dass Balken von oben kommen und man nicht direkt ausweichen muss.
@@ -474,11 +479,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                 if firstgamec{
                     firstgame()
                 }else{
-                    if (!modechanges && GameScene.score % 15 == 0) {
+                    if (!modechanges && !gyroAUS && GameScene.score % 15 == 0 && GameScene.score % 30 != 0) {
                         modechanges = true
                         scoresafe = GameScene.score
                     }
-                    if (modechanges && GameScene.score == scoresafe + 10){
+                    if (modechanges && GameScene.score == scoresafe + 14){
                         scoresafe = -20
                         modechanges = false
                         changed = true
@@ -489,7 +494,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                             scene?.backgroundColor = SKColor.darkGray
                             scorefunc()
                             borderMin = 300
-                            walldownspeed = 10
+                            walldownspeed = 11
                             wallbottomupspace = 1000
                             wallleftrightspace = 1000
                             setSpaces(abstand: wallleftrightspace)
@@ -510,9 +515,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                         if (changed){
                             if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
                                 borderMin = 200
-                                walldownspeed = 5
+                                walldownspeed = 10
                                 wallbottomupspace = 320
-                                wallleftrightspace = 895
+                                wallleftrightspace = 940
                                 setSpaces(abstand: wallleftrightspace)
                                 modechange_placing()
                                 changed = false
