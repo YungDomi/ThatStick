@@ -120,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         borderMax = 696
         borderMin = 200
         
-        //Geschwindigkeit der Wände
+        //Geschwindigkeit der Wände:     3: einfach 5: normal 10: expert
         walldownspeed = 5
         wallsidespeed = 1
         
@@ -141,7 +141,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         figdelay = 0
         
         //max 1000 min 895
-        wallleftrightspace = 895
+        wallleftrightspace = 920
         
         //Highscore auf Gerät speichern
         let gos = GameOverScene()

@@ -16,16 +16,14 @@ class GameOverScene: SKScene {
     var numberscore = SKLabelNode()
     var labelhighscore = SKLabelNode()
     var numberhighscore = SKLabelNode()
-    
     var savehighscore = UserDefaults().integer(forKey: "HIGHSCORE")
-    
     var newhighscore = SKLabelNode()
     var tapplay = SKLabelNode()
     var timer = Timer()
     var kleiner = Bool()
     
     
-    
+    //Konstruktor
     override func didMove(to view: SKView) {
         tapplay = self.childNode(withName: "tapplay") as! SKLabelNode
         tapplay.fontSize = 55
@@ -53,7 +51,7 @@ class GameOverScene: SKScene {
         timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateCounting), userInfo: nil, repeats: true)
     }
 
-    //Verändert die Schriftgrösse des "Doubletap to Play Again"
+    //Animiert die Schriftgrösse des "Doubletap to Play Again" Schriftzuges
     @objc func updateCounting(){
         if tapplay.fontSize <= 50 {
             kleiner = true
@@ -70,7 +68,6 @@ class GameOverScene: SKScene {
     
     
     func setup(){
-        //labelscore.zPosition = 0
         numberscore.zPosition = 0
         numberscore.text = String(0)
         
@@ -81,11 +78,11 @@ class GameOverScene: SKScene {
         newhighscore.isHidden = true
     }
     
-    
+    //Zeigt die relevanten Schriftzüge an. (Score / Highscore)
+    //Entweder den Highscore oder dass ein neuer Hoghscore erreicht wurde
     func score(){
         numberscore.text = String(describing: GameScene.score)
         numberhighscore.text = String(describing: GameScene.highscore)
-        
         if (GameScene.score >= GameScene.highscore) {
             labelhighscore.isHidden = true
             numberhighscore.isHidden = true
@@ -94,6 +91,7 @@ class GameOverScene: SKScene {
         }
     }
     
+    //getter und setter des auf dem Gerät gespeicherten HighScores.
     func getHighScore() -> Int {
         return UserDefaults().integer(forKey: "HIGHSCORE")
     }
