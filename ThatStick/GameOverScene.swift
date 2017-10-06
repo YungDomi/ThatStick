@@ -25,12 +25,13 @@ class GameOverScene: SKScene {
     var kleiner = Bool()
     
     
-
+    
     override func didMove(to view: SKView) {
         tapplay = self.childNode(withName: "tapplay") as! SKLabelNode
         tapplay.fontSize = 55
         scheduledTimerWithTimeInterval()
         
+        //Entdeckt einen Doppelklick (um anschliessend das Game neu zu starten)
         let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
         tap.numberOfTapsRequired = 2
         view.addGestureRecognizer(tap)
@@ -51,8 +52,8 @@ class GameOverScene: SKScene {
         // Scheduling timer to Call the function "updateCounting" with the interval of 1 seconds
         timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateCounting), userInfo: nil, repeats: true)
     }
-    
-    
+
+    //Verändert die Schriftgrösse des "Doubletap to Play Again"
     @objc func updateCounting(){
         if tapplay.fontSize <= 50 {
             kleiner = true
@@ -96,19 +97,17 @@ class GameOverScene: SKScene {
     func getHighScore() -> Int {
         return UserDefaults().integer(forKey: "HIGHSCORE")
     }
-    
-    
     func saveHighScore(){
         UserDefaults().set(Int(GameScene.highscore), forKey: "HIGHSCORE")
         UserDefaults().synchronize()
     }
+
     
-    
+    //Führt das Game fort bei einem Doppeltap
     @objc func doubleTapped() {
         if let scene = GameScene(fileNamed: "GameScene") {
             scene.scaleMode = .aspectFill
             view?.presentScene(scene)
         }
     }
-    
 }

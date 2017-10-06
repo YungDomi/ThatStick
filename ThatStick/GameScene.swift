@@ -54,6 +54,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var space4 = CGFloat()
     var firstgamec = Bool()
     var gyro = Bool()
+    var controller = Bool()
     
     var randomNum1 = integer_t()
     var randomNum = integer_t()
@@ -69,7 +70,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
     var borderMax = integer_t()
     var borderMin = integer_t()
     var gyrosens = CGFloat()
-    var controller = Bool()
     var modechanges = Bool()
     var scoresafe = integer_t()
     var changed = Bool()
@@ -89,6 +89,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
             self.xAcceleration = CGFloat((acceleration?.x)!)
         } )
         
+        //initialisiert alle Grafischen Objekte
         physicsWorld.contactDelegate = self
         w1r = self.childNode(withName: "w1r") as! SKSpriteNode
         w1l = self.childNode(withName: "w1l") as! SKSpriteNode
@@ -104,6 +105,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         stick = self.childNode(withName: "stick") as! SKSpriteNode
         labelhighscore = self.childNode(withName: "labelhighscore") as! SKLabelNode
         numberhighscore = self.childNode(withName: "numberhighscore") as! SKLabelNode
+        
+        if let scene = self.scene {
+            scene.backgroundColor = SKColor.black
+        }
         
         setup()
     }
@@ -143,9 +148,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
         GameScene.highscore = integer_t(gos.getHighScore())
         
         //nicht verändern
-        controller = false
         scoresafe = -20
-        
+        controller = false
         
         
         gyro = false
@@ -482,6 +486,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                     if (modechanges) {
                         if (w1r.position.y <= bottomremoving && w2r.position.y <= bottomremoving && w3r.position.y <= bottomremoving && w4r.position.y <= bottomremoving) {
                             gyro = true
+                            scene?.backgroundColor = SKColor.darkGray
                             scorefunc()
                             borderMin = 300
                             walldownspeed = 10
@@ -512,6 +517,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate  {
                                 modechange_placing()
                                 changed = false
                                 gyro = false
+                                scene?.backgroundColor = SKColor.black
                                 xAcceleration = 0
                             }else{
                                 move()
